@@ -20,11 +20,11 @@ pages:
         - Support: user-guide/support.md
     - Development Guide:
         - Concept:
-            - Coding Style: development-guide/coding-style.md
-            - Documentation: development-guide/documentation.md
+            - Coding Style: development-guide/concept/coding-style.md
+            - Code Documentation: development-guide/concept/code-documentation.md
             - Patterns:
-                - Inversion Of Control: development-guide/ioc.md
-            - Compatibility: development-guide/compatibility.md
+                - Inversion Of Control: development-guide/concept/ioc.md
+            - Compatibility: development-guide/concept/compatibility.md
         - API:
             - Database: development-guide/api/database.md
         - Core Implementation:
@@ -41,6 +41,7 @@ pages:
             - Eco:
                 - Home : development-guide/game-implementations/eco/index.md
     - About:
+        - Documentation: about/documentation.md
         - Licensing: about/licensing.md
         - Contributors: about/contributors.md
 
