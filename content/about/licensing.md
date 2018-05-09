@@ -29,6 +29,8 @@ Copyright (C) | RocketMod | Sven Mawby <fr34kyn01535@bam.yt>
 The following RocketMod extensions are licensed under MIT:
 
 * Rocket.Scripting
+* Rocket.UnrealEngine
+* Rocket.UnityEngine
 
 ```
 MIT License
