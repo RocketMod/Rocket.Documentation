@@ -3,7 +3,7 @@ copyright: 'RocketMod is licensed under <a href="https://creativecommons.org/lic
 docs_dir: 'content'
 repo_name: 'RocketMod/Rocket'
 repo_url: 'https://github.com/RocketMod/Rocket'
-edit_uri: 'edit/rework/docs/content/'
+edit_uri: 'https://github.com/RocketMod/Rocket.Documentation/edit/master/content/'
 pages:
     - Home: index.md
     - User Guide:
