@@ -36,7 +36,7 @@
 
 **Summary:** Kicks a player.
 
-**Syntax:** [command] <[n]ame / id> <reason>
+**Syntax:** [command] [[n]ame / id] [reason]
 
 **Requirments:** Target must be online.
 
@@ -50,7 +50,7 @@
 
 **Summary:** Bans a user.
 
-**Syntax:** [command] <[n]ame / id> <reason>
+**Syntax:** [command] [[n]ame / id] [reason]
   
 **Requirments:** Target must be online to use their name.
 
@@ -64,7 +64,7 @@
 
 **Summary:** Gives a player admininstrator privelages.
 
-**Syntax:** [command] <[name] / id>
+**Syntax:** [command] [[name] / id]
 
 **Requirments:** Target must be online.
 
@@ -78,13 +78,13 @@
 
 **Summary:** Strips a player of their administrator privalges.
 
-**Syntax:** [command] <[n]ame / id>
+**Syntax:** [command] [[n]ame / id]
 
 **Requirments:** Target must be online to use their name.
 
 **Permission:** Rocket.RemoveAdmin
 
-### /<Vanilla or Modkit Command>:
+### /[Vanilla or Modkit Command]
 
 **Aliases:** *None*
 
@@ -92,8 +92,8 @@
 
 **Summary:** *Command-Specified*
 
-**Syntax:** [command] <arg1>,<arg2>,<...>
+**Syntax:** [command] [arg1],[arg2],[...]
 
 **Requirments:** *Command-Specified*
 
-**Permission:** Eco.Base.<Command>
+**Permission:** Eco.Base.[Command]
