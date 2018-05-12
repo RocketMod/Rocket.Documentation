@@ -1,5 +1,3 @@
-## Rocket.Eco Commands:
-
 ### /Save:
 
 **Aliases:** *None*
