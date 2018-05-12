@@ -17,6 +17,10 @@ pages:
             - Plugins: user-guide/configuration/plugins.md
         - Plugins: 
             - Installation: user-guide/plugins/installation.md
+        - Commands:
+            - Rocket: user-guide/commands/rocket.md
+            - Unturned 3: user-guide/commands/unturned3.md
+            - Eco: user-guide/commands/eco.md
         - Support: user-guide/support.md
     - Development Guide:
         - Concept:
