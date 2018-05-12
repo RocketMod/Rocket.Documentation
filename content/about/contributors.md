@@ -18,7 +18,7 @@ to be able to quickly switch out components in RocketMod. With the rework Enes j
 
 **Active Contributors**
 
-* [ChubbyQuokka](https://github.com/ChubbyQuokka)
+* Gray Helmuth ([ChubbyQuokka](https://github.com/ChubbyQuokka))
 
 **Contributors**
 
