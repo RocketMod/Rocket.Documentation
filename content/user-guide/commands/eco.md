@@ -1,4 +1,4 @@
-## Administration Commands:
+## Administration Commands
 
 **/Save:**
 
@@ -96,7 +96,7 @@
 
 ---
 
-## Cheat Commands:
+## Cheat Commands
 
 **/Feed:**
 
@@ -130,7 +130,7 @@
 
 ---
 
-## Vanilla Commands:
+## Vanilla Commands
 
 **/[Vanilla or Modkit Command]**
 
