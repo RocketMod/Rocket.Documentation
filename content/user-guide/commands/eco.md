@@ -1,4 +1,6 @@
-### /Save:
+## Administration Commands:
+
+**/Save:**
 
 **Aliases:** *None*
 
@@ -6,13 +8,15 @@
 
 **Summary:** Saves all vanilla server data.
 
-**Syntax:** [command]
+**Syntax:** *None*
 
 **Requirments:** *None*
 
 **Permission:** Rocket.Save
 
-### /Shutdown:
+---
+
+**/Shutdown:**
 
 **Aliases:** Stop, Quit
 
@@ -20,13 +24,15 @@
 
 **Summary:** Saves all vanilla server data, kicks all users, then stops the server.
 
-**Syntax:** [command]
+**Syntax:** *None*
 
 **Requirments:** *None*
 
 **Permission:** Rocket.Shutdown
 
-### /Kick:
+---
+
+**/Kick:**
 
 **Aliases:** *None*
 
@@ -34,13 +40,15 @@
 
 **Summary:** Kicks a player.
 
-**Syntax:** [command] [[n]ame / id] [reason]
+**Syntax:** [[n]ame / id] [reason]
 
 **Requirments:** Target must be online.
 
 **Permission:** Rocket.Kick
 
-### /Ban:
+---
+
+**/Ban:**
 
 **Aliases:** *None*
 
@@ -48,13 +56,15 @@
 
 **Summary:** Bans a user.
 
-**Syntax:** [command] [[n]ame / id] [reason]
+**Syntax:** [[n]ame / id] [reason]
   
 **Requirments:** Target must be online to use their name.
 
 **Permission:** Rocket.Ban
 
-### /Admin:
+---
+
+**/Admin:**
 
 **Aliases:** *None*
 
@@ -62,27 +72,67 @@
 
 **Summary:** Gives a player admininstrator privelages.
 
-**Syntax:** [command] [[name] / id]
+**Syntax:** [[name] / id]
 
 **Requirments:** Target must be online.
 
 **Permission:** Rocket.Admin
 
-### /RemoveAdmin:
+---
 
-**Aliases:** DelAdmin, UnAdmin, DeAdmin
+**/UnAdmin:**
+
+**Aliases:** DelAdmin, RemoveAdmin, DeAdmin
 
 **Supported Users:** Everything
 
 **Summary:** Strips a player of their administrator privalges.
 
-**Syntax:** [command] [[n]ame / id]
+**Syntax:** [[n]ame / id]
 
 **Requirments:** Target must be online to use their name.
 
 **Permission:** Rocket.RemoveAdmin
 
-### /[Vanilla or Modkit Command]
+---
+
+## Cheat Commands:
+
+**/Feed:**
+
+**Aliases:** Eat
+
+**Supported Users:** Everything
+
+**Summary:** Makes you or another player eat.
+
+**Syntax:** [[n]ame / id]
+
+**Requirments:** Must target user if you're using the Console.
+
+**Permission:** Rocket.Feed
+
+---
+
+**/Skills:**
+
+**Aliases:** Experience, Exp
+
+**Supported Users:** Everything
+
+**Summary:** Give yourself or someone else skill points.
+
+**Syntax:** [[n]ame / id] [points] | [points]
+
+**Requirments:** Must target user if you're using the Console.
+
+**Permission:** Rocket.Skills
+
+---
+
+## Vanilla Commands:
+
+**/[Vanilla or Modkit Command]**
 
 **Aliases:** *None*
 
@@ -90,7 +140,7 @@
 
 **Summary:** *Command-Specified*
 
-**Syntax:** [command] [arg1],[arg2],[...]
+**Syntax:** [arg1],[arg2],[...]
 
 **Requirments:** *Command-Specified*
 
