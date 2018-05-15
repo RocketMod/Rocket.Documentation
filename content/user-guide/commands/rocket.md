@@ -1,6 +1,6 @@
 ## Administration Commands
 
-**/Rocket:**
+###/rocket
 
 **Aliases:** *None*
 
@@ -16,7 +16,7 @@
 
 ---
 
-**/Permission:**
+###/permission
 
 **Aliases:** P
 
@@ -33,7 +33,7 @@
 
 ---
 
-**/PermissionGroup:**
+###/permissionGroup:
 
 **Aliases:** PG
 
@@ -52,7 +52,7 @@
 
 ## Tool Commands
 
-**/Help:**
+###/help
 
 **Aliases:** *None*
 
@@ -70,7 +70,7 @@
 
 ## Migration Commands
 
-**/MigrateConfig:**
+###/migrateconfig
 
 **Aliases:** *None*
 
@@ -86,7 +86,7 @@
 
 ---
 
-**/LegacyMigration:**
+###/legacyMigration
 
 **Aliases:** *None*
 
