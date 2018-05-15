@@ -2,45 +2,37 @@
 
 ### /rocket
 
-**Aliases:** *None*
-**Supported Users:** All
+**Supported Caller:** All
+
 **Summary:** Manages RocketMod.
+
 **Syntax:** \<reload\>
+
 **Permission:** Rocket.ManageRocket
   
 ---
 
-### /permission
+### /permission (/p)
 
-**Aliases:** p
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Manages Rocket permissions.
 
 **Syntax:** [add | remove | reload]
 
-**Requirements:** *None*
-
 **Permission:** Rocket.Permissions.ManagePermissions
-
 
 ---
 
-### /permissionGroup:
+### /permissionGroup (/pg)
 
-**Aliases:** pg
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Manages permission groups.
 
 **Syntax:** [add | remove]
 
-**Requirements:** *None*
-
 **Permission:** Rocket.Permissions.ManageGroups
-
 
 ---
 
@@ -48,15 +40,11 @@
 
 ### /help
 
-**Aliases:** *None*
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Provides help for all or a specific command.
 
 **Syntax:** [command] [1. Child Command] [2. Child Command] [...]
-
-**Requirements:** *None*
 
 **Permission:** Rocket.Help
 
@@ -66,15 +54,11 @@
 
 ### /migrateconfig
 
-**Aliases:** *None*
-
-**Supported Users:** Console
+**Supported Caller:** Console
 
 **Summary:** Migrates configs from one type to another.
 
 **Syntax:** [<from type> <to type> <path>]
-
-**Requirements:** *None*
 
 **Permission:** Rocket.Migrate.Config
 
@@ -82,15 +66,11 @@
 
 ### /legacyMigration
 
-**Aliases:** *None*
-
-**Supported Users:** Console
+**Supported Caller:** Console
 
 **Summary:** Migrates from old RocketMod 4.
 
 **Syntax:** [step]
-
-**Requirements:** *None*
 
 **Permission:** Rocket.Migrate.Legacy
 
