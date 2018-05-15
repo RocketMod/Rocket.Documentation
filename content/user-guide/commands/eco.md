@@ -1,96 +1,76 @@
 ## Administration Commands
 
-**/Save:**
+### /save
 
-**Aliases:** *None*
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Saves all vanilla server data.
-
-**Syntax:** *None*
-
-**Requirments:** *None*
 
 **Permission:** Rocket.Save
 
 ---
 
-**/Shutdown:**
+### /shutdown (/stop, /quit)
 
-**Aliases:** Stop, Quit
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Saves all vanilla server data, kicks all users, then stops the server.
-
-**Syntax:** *None*
-
-**Requirments:** *None*
 
 **Permission:** Rocket.Shutdown
 
 ---
 
-**/Kick:**
+### /kick
 
-**Aliases:** *None*
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Kicks a player.
 
 **Syntax:** [[n]ame / id] [reason]
 
-**Requirments:** Target must be online.
+**Note:** Target must be online.
 
 **Permission:** Rocket.Kick
 
 ---
 
-**/Ban:**
+### /ban
 
-**Aliases:** *None*
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Bans a user.
 
 **Syntax:** [[n]ame / id] [reason]
   
-**Requirments:** Target must be online to use their name.
+**Note:** Target must be online to use their name.
 
 **Permission:** Rocket.Ban
 
 ---
 
-**/Admin:**
+### /admin
 
-**Aliases:** *None*
+**Supported Caller:** All
 
-**Supported Users:** Everything
-
-**Summary:** Gives a player admininstrator privelages.
+**Summary:** Gives a player admininstrator priveleges.
 
 **Syntax:** [[name] / id]
 
-**Requirments:** Target must be online.
+**Note:** Target must be online.
 
 **Permission:** Rocket.Admin
 
 ---
 
-**/UnAdmin:**
+### /unadmin (deladmin, removeadmin, deadmin)
 
-**Aliases:** DelAdmin, RemoveAdmin, DeAdmin
+**Supported Caller:** All
 
-**Supported Users:** Everything
-
-**Summary:** Strips a player of their administrator privalges.
+**Summary:** Strips a player of their administrator priveleges.
 
 **Syntax:** [[n]ame / id]
 
-**Requirments:** Target must be online to use their name.
+**Note:** Target must be online to use their name.
 
 **Permission:** Rocket.RemoveAdmin
 
@@ -98,50 +78,40 @@
 
 ## Cheat Commands
 
-**/Feed:**
+### /feed (/eat)
 
-**Aliases:** Eat
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Makes you or another player eat.
 
 **Syntax:** [[n]ame / id]
 
-**Requirments:** Must target user if you're using the Console.
+**Note:** Must target user if you're using the Console.
 
 **Permission:** Rocket.Feed
 
 ---
 
-**/Skills:**
+### /skills (experience, exp)
 
-**Aliases:** Experience, Exp
-
-**Supported Users:** Everything
+**Supported Caller:** All
 
 **Summary:** Give yourself or someone else skill points.
 
 **Syntax:** [[n]ame / id] [points] | [points]
 
-**Requirments:** Must target user if you're using the Console.
+**Note:** Must target user if you're using the Console.
 
 **Permission:** Rocket.Skills
 
 ---
 
-## Vanilla Commands
+## Vanilla or Modkit Commands
 
-**/[Vanilla or Modkit Command]**
-
-**Aliases:** *None*
-
-**Supported Users:** Must be called from an in-game user.
+**Supported Caller:** Must be called from an in-game user.
 
 **Summary:** *Command-Specified*
 
 **Syntax:** [arg1],[arg2],[...]
-
-**Requirments:** *Command-Specified*
 
 **Permission:** Eco.Base.[Command]
