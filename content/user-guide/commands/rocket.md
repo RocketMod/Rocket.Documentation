@@ -24,7 +24,7 @@
 
 ---
 
-### /permissionGroup (/pg)
+### /permissiongroup (/pg)
 
 **Supported Caller:** All
 
@@ -64,7 +64,7 @@
 
 ---
 
-### /legacyMigration
+### /legacymigration
 
 **Supported Caller:** Console
 
