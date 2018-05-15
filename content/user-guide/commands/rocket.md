@@ -3,17 +3,11 @@
 ### /rocket
 
 **Aliases:** *None*
-
-**Supported Users:** Everything
-
+**Supported Users:** All
 **Summary:** Manages RocketMod.
-
-**Syntax:** <reload>
-
-**Requirements:** *None*
-
+**Syntax:** \<reload\>
 **Permission:** Rocket.ManageRocket
-
+  
 ---
 
 ### /permission
