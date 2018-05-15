@@ -1,6 +1,6 @@
 ## Administration Commands
 
-###/rocket
+### /rocket
 
 **Aliases:** *None*
 
@@ -10,15 +10,15 @@
 
 **Syntax:** <reload>
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.ManageRocket
 
 ---
 
-###/permission
+### /permission
 
-**Aliases:** P
+**Aliases:** p
 
 **Supported Users:** Everything
 
@@ -26,16 +26,16 @@
 
 **Syntax:** [add | remove | reload]
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.Permissions.ManagePermissions
 
 
 ---
 
-###/permissionGroup:
+### /permissionGroup:
 
-**Aliases:** PG
+**Aliases:** pg
 
 **Supported Users:** Everything
 
@@ -43,7 +43,7 @@
 
 **Syntax:** [add | remove]
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.Permissions.ManageGroups
 
@@ -52,7 +52,7 @@
 
 ## Tool Commands
 
-###/help
+### /help
 
 **Aliases:** *None*
 
@@ -62,7 +62,7 @@
 
 **Syntax:** [command] [1. Child Command] [2. Child Command] [...]
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.Help
 
@@ -70,7 +70,7 @@
 
 ## Migration Commands
 
-###/migrateconfig
+### /migrateconfig
 
 **Aliases:** *None*
 
@@ -80,13 +80,13 @@
 
 **Syntax:** [<from type> <to type> <path>]
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.Migrate.Config
 
 ---
 
-###/legacyMigration
+### /legacyMigration
 
 **Aliases:** *None*
 
@@ -96,7 +96,7 @@
 
 **Syntax:** [step]
 
-**Requirments:** *None*
+**Requirements:** *None*
 
 **Permission:** Rocket.Migrate.Legacy
 
