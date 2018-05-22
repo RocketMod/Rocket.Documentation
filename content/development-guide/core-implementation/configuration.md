@@ -60,6 +60,7 @@ Configuration.Save ();
 # Creating Multiple Configurations
 ```csharp
 using Rocket.Core.Plugins;
+using Rocket.Core.Configuration;
 
 namespace SamplePlugin
 {
