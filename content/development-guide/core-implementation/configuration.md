@@ -1,10 +1,10 @@
 > **Important: The examples in here may be outdated, feel free to help us keeping them up to date, you can simply edit them if you are logged in on GitHub.**
 
 ***
-# Creating a Configuration
+## Creating a Configuration
 Configurations in RocketMod 5 works similar to how it did in the past.
 
-## Example Configuration
+### Example Configuration
 ```csharp
 using Rocket.Core.Plugins;
 
@@ -45,19 +45,19 @@ namespace SamplePlugin
 }
 ```
 
-# Reading from Configuration
+### Reading from Configuration
 To use the values from the configuration you can use the following code
 ```csharp
 string myMsg = ConfigurationInstance.WelcomeMsg;
 ```
 
-# Saving Configuration
+### Saving Configuration
 To save the config you can run the following
 ```csharp
 Configuration.Save ();
 ```
 
-# Creating Multiple Configurations
+### Creating Multiple Configurations
 ```csharp
 using Rocket.Core.Plugins;
 using Rocket.Core.Configuration;
