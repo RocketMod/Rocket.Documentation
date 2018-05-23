@@ -31,7 +31,7 @@ using Rocket.Core.User;
 
 your file should now look something like this
 
-```
+```csharp
 using Rocket.API.DependencyInjection;
 using Rocket.API.Eventing;
 using Rocket.Core.Eventing;
@@ -69,11 +69,7 @@ public class Config
 }
 ```
 
-This should remove the previous error warning. Any variables added to this class will act as our configuration. Now we go back to our Main class and add the following
-
-```csharp
-public override object DefaultConfiguration => new Config ();
-```
+This should remove the previous error warning. Any variables added to this class will act as our configuration.
 
 Now that our configuration is setup we'll move onto making the event listener by creating a new class which will inherit the events we need
 
@@ -120,8 +116,6 @@ namespace WelcomeMessager
 {
 	public class Main : Plugin<Config>
 	{
-		public override object DefaultConfiguration => new Config ();
-
 		protected Main (IDependencyContainer container) : base ("Welcome Messager", container)
 		{
 
