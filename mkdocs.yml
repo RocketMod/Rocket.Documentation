@@ -35,9 +35,11 @@ pages:
             - List of all Services: development-guide/core-implementation/services.md
             - Eventing: development-guide/core-implementation/eventing.md
             - Permissions: development-guide/core-implementation/permissions.md
+            - Configuration: development-guide/core-implementation/configuration.md
             - Logging: development-guide/core-implementation/logging.md
         - Plugins:
             - Migration Guide: development-guide/plugins/migration-guide.md
+            - Making your first plugin: development-guide/plugins/making-your-first-plugin.md
         - Game Implementations:
             - Creating a new implementation: development-guide/game-implementations/creating-a-new-implementation.md
             - Unturned 3:
