@@ -3,12 +3,12 @@ The TaskScheduler is the replacement for the Update function from RocketMod 4 wh
 ## Overview
 With the TaskScheduler you can:
 
-**1**. Run a method every frame (Same as Update)
-**2**. Run a method the next frame
-**3**. Run a method every physics update (Same as FixedUpdate)
-**4**. Run a method next physics update
-**5**. Run a method every frame on a seperate thread (Same as Update just on seperate thread)
-**6**. Run a method the next frame on a seperate thread
+1. Run a method every frame (Same as Update)
+2. Run a method the next frame
+3. Run a method every physics update (Same as FixedUpdate)
+4. Run a method next physics update
+5. Run a method every frame on a seperate thread (Same as Update just on seperate thread)
+6. Run a method the next frame on a seperate thread
 
 ## Base
 To start you first need to pass the ITaskScheduler through the constructor of your plugin
