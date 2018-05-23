@@ -10,12 +10,9 @@ using Rocket.Core.Plugins;
 
 namespace SamplePlugin
 {
-	// 'Config' can be the name of any class you want be it PluginConfig or Configuration. 
-	// Make sure to override the default configuration
+	// 'Config' can be the name of any class you want be it PluginConfig or Configuration.
 	public class Main : Plugin <Config>
 	{
-		public override object DefaultConfiguration => new Config ();
-		
 		protected Main (IDependencyContainer container) : base ("PluginName", container)
 		{
 			
@@ -69,8 +66,6 @@ namespace SamplePlugin
 	{
 		private IConfiguration config;
 		private ConfigTwo configTwo;
-	
-		public override object DefaultConfiguration => new Config ();
 		
 		protected Main (IDependencyContainer container, IConfiguration config) : base ("PluginName", container)
 		{
