@@ -148,7 +148,7 @@ protected override void OnLoad (bool isFromReload)
 public void SampleMethod ()
 {
 	object sampleData = // Do Something...
-    SampleMethodCallback (sampleData);
+	SampleMethodCallback (sampleData);
 }
 
 public void SampleMethodCallback (object sampleReturn)
