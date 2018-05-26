@@ -24,7 +24,8 @@ namespace SamplePlugin
 	public class Config
 	{
 		public string WelcomeMsg { get; set; } = "MyWelcomeMsg";
-		public ConfigClass [] { get; set; } = new ConfigClass []
+		[ConfigArray (ElementName = "Class")]
+		public ConfigClass [] Classes { get; set; } = new ConfigClass []
 		{
 			new ConfigClass ()
 			{
@@ -92,7 +93,8 @@ namespace SamplePlugin
 	public class ConfigOne
 	{
 		public string MyWelcomeMsg { get; set; } = "MyWelcomeMsg";
-		public ConfigClass [] { get; set; } = new ConfigClass []
+		[ConfigArray (ElementName = "Class")]
+		public ConfigClass [] Classes { get; set; } = new ConfigClass []
 		{
 			new ConfigClass ()
 			{
