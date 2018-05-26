@@ -1,14 +1,19 @@
-Rocket.API:
-  * IChatManager
-  * IChatHandler
-  * IChatProvider
-  * IConfiguration
-  * IDependencyContainer
-  * IEconomyProvider
-  * IEventManager
-  * ILogger
-  * IPermissionsManager
-  * IPlayerManager
-  * IPluginManager
-  * ITaskScheduler
-  * ITranslations
+| **Rocket.API**                                  |
+|-------------------------------------------------|
+| ICommand                                        |
+| ICommandHandler                                 |
+| ICommandProvider                                |
+| IConfiguration                                  |
+| IConfigurationContext                           |
+| IDependencyContainer                            |
+| IEconomyProvider                                |
+| ILogger                                         |
+| IPermissionProvider                             |
+| IPlayerManager                                  |
+| IPlayer                                         |
+| IPluginManager                                  |
+| IPlugin                                         |
+| ITaskScheduler                                  |
+| IUserManager                                    |
+| IUser                                           |
+| ILifecycleObject                                |
