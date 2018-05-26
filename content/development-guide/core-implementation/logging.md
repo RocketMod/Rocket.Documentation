@@ -1,15 +1,19 @@
 RocketMod 5 uses ILogger service for logging.
-Add it to your plugin like this:
+User it in your plugin like this:
 
 ```cs
 public class MyPlugin : Plugin
 {
-    public MyPlugin(IDependencyContainer container, ILogger logger) : base(container)
+    public MyPlugin(IDependencyContainer container) : base(container)
     {
-        this.logger = logger;
-        logger.LogInformation("Hello world!");
+        
+    }
+    
+    protected override void OnLoad (bool isFromReload)
+    {
+        Logger.Log ("Plugin Loaded");
     }
 }
 ```
 
-To register your own logger, see [[Services]].
+To register your own logger, see [Services](https://rocketmod.guide/development-guide/core-implementation/services/).
