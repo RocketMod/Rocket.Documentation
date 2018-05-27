@@ -10,7 +10,7 @@ namespace SamplePlugin
 	public class Main : Plugin
 	{
 		private IPermissionProvider permissionProvider;
-		protected Main (IDependencyContainer container, IPermissionProvider) : base ("SamplePlugin", container)
+		public Main (IDependencyContainer container, IPermissionProvider) : base ("SamplePlugin", container)
 		{
 			this.permissionProvider = permissionProvider;
 		}
@@ -309,7 +309,7 @@ namespace SamplePlugin
 {
 	public class Main : Plugin
 	{
-		protected Main (IDependencyContainer container) : base ("Sample Plugin", container)
+		public Main (IDependencyContainer container) : base ("Sample Plugin", container)
 		{
 			container.RegisterSingletonType <IPermissionProvider, MySamplePermissionProvider> ();
 		}
