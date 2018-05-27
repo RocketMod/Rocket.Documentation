@@ -13,7 +13,7 @@ namespace SamplePlugin
 	// 'Config' can be the name of any class you want be it PluginConfig or Configuration.
 	public class Main : Plugin <Config>
 	{
-		protected Main (IDependencyContainer container) : base ("PluginName", container)
+		public Main (IDependencyContainer container) : base ("PluginName", container)
 		{
 			
 		}
@@ -68,7 +68,7 @@ namespace SamplePlugin
 		private IConfiguration config;
 		private ConfigTwo configTwo;
 		
-		protected Main (IDependencyContainer container, IConfiguration config) : base ("PluginName", container)
+		public Main (IDependencyContainer container, IConfiguration config) : base ("PluginName", container)
 		{
 			this.config = config;
 		}
