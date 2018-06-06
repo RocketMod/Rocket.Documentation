@@ -31,13 +31,14 @@ pages:
             - Compatibility: development-guide/concept/compatibility.md
         - API:
             - Database: development-guide/api/database.md
+            - Command: development-guide/api/command.md
+            - Task Scheduler: development-guide/api/task-scheduler.md
         - Core Implementation:
             - List of all Services: development-guide/core-implementation/services.md
             - Eventing: development-guide/core-implementation/eventing.md
             - Permissions: development-guide/core-implementation/permissions.md
             - Configuration: development-guide/core-implementation/configuration.md
             - Logging: development-guide/core-implementation/logging.md
-            - Task Scheduler: development-guide/core-implementation/task-scheduler.md
         - Plugins:
             - Migration Guide: development-guide/plugins/migration-guide.md
             - Making your first plugin: development-guide/plugins/making-your-first-plugin.md
