@@ -53,7 +53,7 @@ We'll start by making Main inherit from Plugin
 ```csharp
 public class Main : Plugin <Config>
 {
-	protected Main (IDependencyContainer container) : base ("Welcome Messager", container)
+	public Main (IDependencyContainer container) : base ("Welcome Messager", container)
 	{
 		
 	}
@@ -116,7 +116,7 @@ namespace WelcomeMessager
 {
 	public class Main : Plugin<Config>
 	{
-		protected Main (IDependencyContainer container) : base ("Welcome Messager", container)
+		public Main (IDependencyContainer container) : base ("Welcome Messager", container)
 		{
 
 		}

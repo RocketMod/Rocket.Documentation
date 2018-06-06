@@ -103,7 +103,7 @@ You can trigger your event like this:
 MyEvent @event = new MyEvent();
 @event.SomeData = data; 
 eventManager.Emit(plugin, @event, 
-    (sender, e) => {
+    (e) => {
        //event finished and all callbacks were called
        if(@event.IsCancelled) //if your event extends ICancellableEvent
           return;
