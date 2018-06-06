@@ -42,7 +42,8 @@ This will schedule a method to run every [Update](https://docs.unity3d.com/Scrip
 ```csharp
 protected override void OnLoad (bool isFromReload)
 {
-	taskScheduler.ScheduleEveryFrame (this, SampleMethod);
+	// the SampleMethod string acts as a user friendly name can be anything you want
+	taskScheduler.ScheduleEveryFrame (this, SampleMethod, "SampleMethod");
 }
 
 private void SampleMethod ()
@@ -59,28 +60,28 @@ This will schedule a method to run the next [Update](https://docs.unity3d.com/Sc
 Im gonna skip the padding above and just focus on the taskScheduler bit.
 
 ```csharp
-taskScheduler.ScheduleNextFrame (this, SampleMethod);
+taskScheduler.ScheduleNextFrame (this, SampleMethod, "SampleMethod");
 ```
 
 ## ScheduleEveryPhysicUpdate
 This will schedule a method to run every [FixedUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html) frame.
 
 ```csharp
-taskScheduler.ScheduleEveryPhysicUpdate (this, SampleMethod);
+taskScheduler.ScheduleEveryPhysicUpdate (this, SampleMethod, "SampleMethod");
 ```
 
 ## ScheduleNextPhysicsUpdate
 This will schedule a method to the next [FixedUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html) frame and **it will run only once**.
 
 ```csharp
-taskScheduler.ScheduleNextPhysicUpdate (this, SampleMethod);
+taskScheduler.ScheduleNextPhysicUpdate (this, SampleMethod, "SampleMethod");
 ```
 
 ## ScheduleEveryAsyncFrame
 This and the next functions are probably the most imporant. This will run your method every frame on a **seperate** thread, this is vital for performance, if your method is doing some calculation and will have a delay it should be run on a seperate thread to avoid lagging the server, the next one is probably more useful then the this since its only run once but still.
 
 ```csharp
-taskScheduler.ScheduleEveryAsyncFrame (this, SampleMethod);
+taskScheduler.ScheduleEveryAsyncFrame (this, SampleMethod, "SampleMethod");
 ```
 
 ## ScheduleNextAsyncFrame
@@ -89,7 +90,40 @@ This will run your method once on the next frame in a **seperate** thread.
 > **Please use this for anything sql or database related, don't be that plugin that lags the server.**
 
 ```csharp
-taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod);
+taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod, "SampleMethod");
+```
+
+## ScheduleDelayed
+This will run your method once after the set delay time and can be both on **main** thread and **seperate** thread.
+It is also destroyed after reload.
+
+```csharp
+TimeSpan runAfter = TimeSpan.FromSeconds (15); // Runs after 15 seconds
+taskScheduler.ScheduleDelayed (this, SampleMethod, "SampleMethod", runAfter, true); // Async
+taskScheduler.ScheduleDelayed (this, SampleMethod, "SampleMethod", runAfter); // No Async
+```
+
+## ScheduleAt
+This will run your method once after the set delay time and can be both on **main** thread and **seperate** thread
+It is also destroyed after reload.
+
+```csharp
+TimeSpan runAfter = TimeSpan.FromSeconds (15); // Runs every 15 seconds
+taskScheduler.ScheduleAt (this, SampleMethod, "SampleMethod", runAfter, true); // Async
+taskScheduler.ScheduleAt (this, SampleMethod, "SampleMethod", runAfter); // No Async
+```
+
+## SchedulePeriodically
+This will run your method every set amount of time and can have a delay also can be both on **main** thread and **seperate** thread
+It is also destroyed after reload.
+
+```csharp
+TimeSpan runEvery = TimeSpan.FromSeconds (30); Run every 30 Seconds
+TimeSpan runAfter = TuneSpan.FromSeconds (5); After 5 Second Delay (were applicable)
+taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, null, true); // Async
+taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, runAfter, true); // Delayed Async
+taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery); // No Async
+taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, runAfter); // Delayed
 ```
 
 ## Extra
@@ -127,7 +161,7 @@ myTask.Cancel ();
 ```csharp
 protected override void OnLoad (bool isFromReload)
 {
-	taskScheduler.ScheduleNextFrame (this, () => SampleMethod ("A little touch of wizard"));
+	taskScheduler.ScheduleNextFrame (this, () => SampleMethod ("A little touch of wizard"), "Wizard's SampleMethod");
 }
 
 public void SampleMethod (string sampleParameter)
@@ -142,7 +176,7 @@ You cant use return however you can create a callback function.
 ```csharp
 protected override void OnLoad (bool isFromReload)
 {
-    taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod);
+    taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod, "SampleMethod");
 }
 
 public void SampleMethod ()
