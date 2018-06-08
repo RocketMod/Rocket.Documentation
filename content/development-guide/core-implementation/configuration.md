@@ -68,7 +68,7 @@ namespace SamplePlugin
 		private IConfiguration config;
 		private ConfigTwo configTwo;
 		
-		protected Main (IDependencyContainer container, IConfiguration config) : base ("PluginName", container)
+		public Main (IDependencyContainer container, IConfiguration config) : base ("PluginName", container)
 		{
 			this.config = config;
 		}
