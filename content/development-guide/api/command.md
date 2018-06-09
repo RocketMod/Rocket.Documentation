@@ -100,8 +100,8 @@ Just add the following to your SampleCommand
 ```csharp
 private MyPlugin plugin;
 
-public SampleCommand (MyPlugin plugin)
+public SampleCommand (IPlugin plugin)
 {
-	this.plugin = plugin; 
+	this.plugin = (MyPlugin)plugin; 
 }
 ```
