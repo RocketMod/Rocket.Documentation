@@ -18,7 +18,7 @@ rocket install uconomy
 ```
 
 ### Uninstall
-Works the same as Instal except this time it will remove the plugin
+Works the same as install except this time it will remove the plugin
 
 ```
 rocket uninstall <plugin-name>
