@@ -42,6 +42,7 @@ pages:
         - Plugins:
             - Migration Guide: development-guide/plugins/migration-guide.md
             - Making your first plugin: development-guide/plugins/making-your-first-plugin.md
+            - List of Events: development-guide/plugins/events.md
         - Game Implementations:
             - Creating a new implementation: development-guide/game-implementations/creating-a-new-implementation.md
             - Unturned 3:
