@@ -29,7 +29,7 @@ namespace SamplePlugin
 **Name:**		The commands name (e.g. `rocket`, `buy`, etc).
 **Aliases:**		A list of alternative for the name, not required.
 **Summary:**		A short summary of the commands function.
-**Description:**	A long description entailing the commands functionality, not required, not required.
+**Description:**	A long description entailing the commands functionality, not required.
 **Permission:**		The permission the player needs to use the command. Recommended to keep null as it defaults to `PluginName.CommandName`.
 **Syntax:**	        A syntax string for the command `[]` = *optional* and `<>` = *required* (e.g. [steamId] <itemId>).
 **ChildCommands:**	A list of child commands (e.g. `shop sell`, `shop buy` : `buy` and `sell` are child commands of `shop`), not required.
@@ -80,7 +80,7 @@ public static SampleJokeCommand : IChildCommand
 
 Then set `ChildCommands` to this in your base command.
 ```csharp
-public IChildCommand [] ChildCommands { get; } =
+public IChildCommand [] ChildCommands { get; } = new IChildCommand []
 {
 	new SampleJokeCommand ()
 };
@@ -94,8 +94,8 @@ Just add the following to your `SampleCommand`.
 ```csharp
 private MyPlugin plugin;
 
-public SampleCommand (IPlugin _plugin)
+public SampleCommand (IPlugin plugin)
 {
-	plugin = (MyPlugin)_plugin; 
+	this.plugin = (MyPlugin)plugin;
 }
 ```
