@@ -23,9 +23,9 @@ namespace SamplePlugin
 	{
 		private ITaskScheduler taskScheduler;
 
-		public Main (IDependencyContainer container, ITaskScheduler _taskScheduler) : base ("Sample Plugin", container)
+		public Main (IDependencyContainer container, ITaskScheduler taskScheduler) : base ("Sample Plugin", container)
 		{
-			taskScheduler = _taskScheduler;
+			this.taskScheduler = taskScheduler;
 		}
 	}
 }
