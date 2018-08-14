@@ -51,8 +51,6 @@ pages:
                 - Home : development-guide/game-implementations/eco/index.md
     - About:
         - Documentation: about/documentation.md
-        - Licensing: about/licensing.md
-        - Contributors: about/contributors.md
 
 theme:
   custom_dir: 'theme'
