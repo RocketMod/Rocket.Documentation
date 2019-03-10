@@ -53,7 +53,7 @@ public async Task ExecuteAsync (ICommandContext context)
     player.Kill();
 }
 ```
-> **Note:** Ensure that `SupportsUser` is set to `user is UnturnedUser` or add manual checks like `if(context.User is UnturnedUser)`, otherwise you might get `InvalidCastException` when a different user type (e.g. the console) calls the command.
+!!! note Ensure that `SupportsUser` is set to `user is UnturnedUser` or add manual checks like `if(context.User is UnturnedUser)`, otherwise you might get `InvalidCastException` when a different user type (e.g. the console) calls the command.
 
 #### Registering Child Commands
 Child commands have their own relative contexts, aliases, summaries, syntaxes and permissions. For example, on `/sample joke 1`, `context.Parameters[0]` will be equals to `1`.

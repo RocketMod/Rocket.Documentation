@@ -56,7 +56,7 @@ public class MyPlugin : Plugin
 }
 ```
 
-**Note:** Execution order of events is like this:
+!!! note Execution order of events is like this:
 `Lowest -> Low -> Normal -> High -> Highest -> Monitor`
 You should only use monitor when it does not impact anything ingame, for example you can use it for logging purposes.
 
