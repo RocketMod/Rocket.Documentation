@@ -94,11 +94,11 @@ Now `/sample joke` should work. You can also use `/help sample joke` to get help
 Just add the following to your `SampleCommand` class.
 
 ```csharp
-private MyPlugin myPlugin;
+private MyPluginMain myPlugin;
 
 public SampleCommand (IPlugin plugin)
 {
-    this.myPlugin = (MyPlugin)plugin;
+    this.myPlugin = (MyPluginMain)plugin;
 }
 ```
 The IPlugin supplied here is automatically sdt to the plugin which registers the command (which is normally your plugin).
@@ -139,8 +139,13 @@ public class MyPluginCommands
 
 Unlike `ICommand`s, `[Command]`-based commands are not automatically registed. You can register the class above like this:
 ```csharp
-public class MyPlugin : Plugin
+public class MyPluginMain : Plugin
 {
+    public MyPluginMain(IDependencyContainer container) : base ("MyPlugin", container)
+    {
+			
+    }
+
     protected override async Task OnActivate(bool isFromReload)
     {
         MyPluginCommands myCommands = new MyPluginCommands();

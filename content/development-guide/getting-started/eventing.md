@@ -6,7 +6,7 @@ The default C# events used with old RocketMod 4 were very limited. It was not po
 To listen to events, you will have to create a class which implements `IEventListener<YourTargetEvent>`. 
 Don't forget to add `[EventHandler]` attribute to your method to set various options like priority.
 
-You have to register your event listener with `EventManager.AddEventListener(YourPlugin, YourIListener)` on plugin load to register your events. 
+You have to register your event listener with `EventBus.AddEventListener(YourPlugin, YourIListener)` on plugin load to register your events. 
 
 ### Example listener class
 
@@ -20,13 +20,13 @@ public class MyEventListener : IEventListener<PlayerConnectedEvent>, IEventListe
     }
 
     [EventHandler]
-    public void HandleEvent(IEventEmitter emitter, PlayerConnectedEvent @event)
+    public async Task HandleEvent(IEventEmitter emitter, PlayerConnectedEvent @event)
     {
-        chatManager.Broadcast(@event.Player.Name + " joined");
+        await chatManager.BroadcastAsync(@event.Player.Name + " joined");
     }
 
     [EventHandler]
-    public void HandleEvent(IEventEmitter emitter, PlayerChatEvent @event)
+    public async Task HandleEvent(IEventEmitter emitter, PlayerChatEvent @event)
     { 
         if(ContainsBadWord(@event.Message))
         {
@@ -38,20 +38,20 @@ public class MyEventListener : IEventListener<PlayerConnectedEvent>, IEventListe
             => return message.Contains("Trojaner");
 }
 
-public class MyPlugin : Plugin
+public class MyPluginMain : Plugin
 {
     private readonly IChatManager chatManager;
-    private readonly IEventManager eventManager;
+    private readonly IEventBus eventBus;
 
-    public HelloWorldPluginMain(IDependencyContainer container, IChatManager chatManager, IEventManager eventManager) : base("HelloWorldPlugin", container)
+    public MyPluginMain(IDependencyContainer container, IChatManager chatManager, IEventBus eventBus) : base("MyPlugin", container)
     {
         this.chatManager = chatManager;
-        this.eventManager = eventManager;
+        this.eventBus = eventBus;
     }
 
-    protected override void OnLoad()
+    protected override async Task OnActivate(bool isFromReload)
     {
-        eventManager.AddEventListener(this, new MyEventListener(chatManager));
+        eventBus.AddEventListener(this, new MyEventListener(chatManager));
     }
 }
 ```
@@ -97,16 +97,17 @@ public class MyEvent: Event, ICancellableEvent
 }
 ```
 
-You can trigger your event like this:
+You can trigger and handle your custom events like this:
 
 ```cs
 MyEvent @event = new MyEvent();
 @event.SomeData = data; 
-eventManager.Emit(plugin, @event, 
-    (e) => {
-       //event finished and all callbacks were called
+eventBus.Emit(plugin, @event, callback: (e) => {
+       //event has finished and all listeners were called
+       
        if(@event.IsCancelled) //if your event extends ICancellableEvent
           return;
+
        // do something with @event.SomeData        
-    }); // plugins listening to events can change "SomeData"
+}); // plugins listening to events can change "SomeData"
 ```

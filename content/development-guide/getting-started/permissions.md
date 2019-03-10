@@ -1,318 +1,200 @@
-> **Important: The examples in here may be outdated, feel free to help us keeping them up to date, you can simply edit them if you are logged in on GitHub.**
+Permissions are used to determine which users can execute an action and which can not.
 
-***
-## Base
-We need to first add the permission provider
-
+To access the permissions service, add the IPermissionProvider service to your plugin like this:
 ```csharp
 namespace SamplePlugin
 {
-	public class Main : Plugin
-	{
-		private IPermissionProvider permissionProvider;
-		public Main (IDependencyContainer container, IPermissionProvider) : base ("SamplePlugin", container)
-		{
-			this.permissionProvider = permissionProvider;
-		}
-	}
+    public class MyPluginMain : Plugin
+    {
+        private IPermissionProvider permissionProvider;
+        public MyPluginMain(IDependencyContainer container, IPermissionProvider) : base ("MyPlugin", container)
+        {
+            this.permissionProvider = permissionProvider;
+        }
+    }
 }
 ```
 With the permission provider added we can begin going over its features.
 
-## Permissions
-### Check Permission
-Check if a user has a permission
+## Managing Permissions
+### Checking Permissions
+To check if a user has a permission, use `CheckPermissionAsync`.
 
 ```csharp
-// Checks if they have the permission
-if (permissionProvider.CheckPermission (user, "rocket") == PermissionResult.Grant)
-	// Do Something
+PermissionResult checkResult = await permissionProvider.CheckPermissionAsync(user, "rocket");
 
-// Checks if they dont have the permission
-if (permissionProvider.CheckPermission (user, "rocket") == PermissionResult.Deny)
-	//Do Sometin
+switch(checkResult)
+{
+    case PermissionResult.Grant:
+        // The permission was explicitly granted
+        DoSomething();
+        break;
+    case PermissionResult.Deny:
+        // The permission was explicitly denied
+        ShowPermissionDeniedErrorMessage();
+        break;
+    case PermissionResult.Default:
+        // The permission was not set up. Usually the action get's denied here as well.
+        ShowPermissionDeniedErrorMessage();
+        break;				
+}
 ```
 
-### Check All Permissions
-Check if a user has an array of permissions
-
+### Checking against All Permissions
+To check if a user has access to all requested permissions, use `CheckHasAllPermissionsAsync`.
 ```csharp
-if (permissionProvider.CheckHasAllPermissions (user, "rocket", "p", "i") == PermissionResult.Grant)
-	// Do Something
-
-if (permissionProvider.CheckHasAllPermissions (user, new string [] { "rocket", "p", "i" }) == PermissionResult.Grant)
-	// Do Something
+if (await permissionProvider.CheckHasAllPermissionsAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
+{
+    // Do Something
+}	
 ```
 
-### Check Any Permission
-Check if a user has any permission from an array
-
+### Checking against Any Permission
+To check if a user has any permission from the requested permissions, use `CheckHasAnyPermissionAsync`.
 ```csharp
-if (permissionProvider.CheckHasAnyPermission (user, "rocket", "p", "i") == PermissionResult.Grant)
-	// Do Something
-
-if (permissionProvider.CheckHasAnyPermission (user, new string [] { "rocket", "p", "i" }) == PermissionResult.Grant)
-	// Do Something
+if (await permissionProvider.CheckHasAnyPermissionAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
+{
+    // Do Something
+}	
 ```
 
-### Add Permission
-Add a permission to a group or user
+### Granting Permissions
+To grant a permission to a group or user, use `AddPermissionAsync`.
 
 ```csharp
-// will return true if added else false
+// will return true if successful
 // Adds permission to user
-permissionProvider.AddPermission (user, "rocket");
+await permissionProvider.AddPermissionAsync(user, "rocket");
 // Adds permission to group
-permissionProvider.AddPermission (group, "rocket");
+await permissionProvider.AddPermissionAsync(group, "rocket");
 ```
+
+> This will result in `PermissionResult.Grant` return on permission check.
 
 ### Remove Permission
-Remove a permission from a group or user
+To remove a permission from a group or user, use `RemovePermissionAsync`.
 
 ```csharp
 // will return true if removed else false
 // Remove permission from user
-permissionProvider.RemovePermission (user, "rocket");
+await permissionProvider.RemovePermissionAsync(user, "rocket");
 // Remove permission from group
-permissionProvider.RemovePermission (group, "rocket");
+await permissionProvider.RemovePermissionAsync(group, "rocket");
 ```
 
-### Add Denied Permission
-Deny a permission from a group or user (full override only way to restore permission is to remove the deny)
+> This will result in `PermissionResult.Default` return on permission check.
+
+### Add a explicitly Denied Permission
+To deny a permission from a group or user use `AddDeniedPermissionAsync`. This will override any explicit grants, inherited or not.
 
 ```csharp
 // returns true if added else false
 // Add to user
-permissionProvider.AddDeniedPermission (user, "heal");
+await permissionProvider.AddDeniedPermissionAsync(user, "heal");
 // Add to group
-permissionProvider.AddDeniedPermission (group, "heal");
+await permissionProvider.AddDeniedPermissionAsync(group, "heal");
 ```
 
-### Remove Denied Permission
-Remove the deny of a permission
+> This will result in `PermissionResult.Denied` return on permission check.
+
+### Removing a explicitly Denied Permission
+To remove explicit denying of a permission, use `RemoveDeniedPermissionAsync`.
 
 ```csharp
 // returns true if removed else false
 // Remove from user
-permissionProvider.RemoveDeniedPermission (user, "heal");
+await permissionProvider.RemoveDeniedPermissionAsync(user, "heal");
 // Remove from group
-permissionProvider.RemoveDeniedPermission (group, "heal");
+await permissionProvider.RemoveDeniedPermissionAsync(group, "heal");
 ```
 
-## Groups
-### Get Group
-Get a group by Id
+> This will result in `PermissionResult.Default` return on permission check.
+
+## Managing Permission Groups
+### Getting a Group
+To get a group by it's ID, use `GetGroupAsync`.
 
 ```csharp
-IPermissionGroup group = permissionProvider.GetGroup ("vip");
+IPermissionGroup group = await permissionProvider.GetGroupAsync("vip");
 ```
 
-### Get Primary Group
-Get a users primary group
+### Getting the Primary Permission Group of a User
+To get a user's primary group, use `GetPrimaryGroupAsync`.
 
 ```csharp
-IPermissionGroup group = permissionProvider.GetPrimaryGroup (user);
+IPermissionGroup group = await permissionProvider.GetPrimaryGroupAsync(user);
 ```
 
-### Get Groups
-Get all groups
+### Getting All Permission Groups
+To get all permission groups, use `GetGroupsAsync`.
 
 ```csharp
-// Returns all groups
-IEnumerable<IPermissionGroup> groups = permissionProvider.GetGroups ();
-
-// Returns all groups a user has
-IEnumerable<IPermissionGroup> groups = permissionProvider.GetGroups (user);
+IEnumerable<IPermissionGroup> groups = await permissionProvider.GetGroupsAsync();
 ```
 
-### Add Group
-Add a group to a user
+### Getting Permission Groups of a User
+To get permission groups of a user, use `GetGroupsAsync(user)`.
+```csharp
+IEnumerable<IPermissionGroup> groups = await permissionProvider.GetGroupsAsync(user);
+```
+
+### Add a User to a Permission Group
+To add a user to a permission group, use `AddGroupAsync`.
 
 ```csharp
-IPermissionGroup group = permissionProvider.GetGroup ("vip");
+IPermissionGroup group = await permissionProvider.GetGroupAsync("vip");
 if (group == null)
 	return; // Group doesnt exist
-permissionProvider.AddGroup (user, group);
+
+await permissionProvider.AddGroupAsync(user, group);
 ```
 
-### Remove Group
-Remove a group from a user
+### Removing a Permission Group
+To remove a user from a permission group, use `RemoveGroupAsync`.
 
 ```csharp
-IPermissionGroup group = permissionProvider.GetGroup ("vip");
+IPermissionGroup group = permissionProvider.GetGroupAsync("vip");
 if (group == null)
 	return; // Group doesnt exist
-permissionProvider.RemoveGroup (user, group);
+
+await permissionProvider.RemoveGroupAsync(user, group);
 ```
 
-### Create Group
-Create a new group
+### Creating a Permission Group
+To create a new group, use `CreateGroupAsync`:
 
 ```csharp
-permissionProvider.CreateGroup (new PermissionGroup () 
+await permissionProvider.CreateGroupAsync(new PermissionGroup() 
 {
 	Id = "vip",
 	Name = "VIP",
-	etc
+	...
 });
 ```
 
-### Delete Group
-Delete a group
+### Deleting a Permission Group
+To delete a group, use `DeleteGroupAsync`:
 
 ```csharp
-permissionProvider.DeleteGroup (group);
+await permissionProvider.DeleteGroupAsync(group);
 ```
 
-### Update Group
-Update a group
+### Updating a Permission Group
+To updates a group, use `UpdateGroupAsync`:
 
 ```csharp
-var group = permissionProvider.GetGroup ("vip");
+var group = await permissionProvider.GetGroupAsync("vip");
+
+// Note: It is not guaranteed that you can change a Group's ID after it has been set.
 group.Name = "Gold";
 
-permissionProvider.UpdateGroup (group);
+await permissionProvider.UpdateGroupAsync(group);
 ```
 
-### Load, Save, Reload
+### Loading, Saving and Reloading the Permissions
 
 ```csharp
-permissionProvider.Load (context);
-permissionProvider.Save ();
-permissionProvider.Reload ();
-```
-
-## Creating your own Permission Provider
-### Make new Class
-Create the Permission Provider and implement its features. You can see examples from the [ConfigurationPermissionProvider] (https://github.com/RocketMod/Rocket/blob/master/Rocket.Core/Permissions/ConfigurationPermissionProvider.cs) and [ConsolePermissionProvider](https://github.com/RocketMod/Rocket/blob/master/Rocket.Core/Permissions/ConsolePermissionProvider.cs)
-
-```csharp
-namespace SamplePlugin
-{
-	[ServicePriority (Priority = ServicePriority.High)]
-	public class MySamplePermissionProvider : IPermissionProvider
-	{
-		public MySamplePermissionProvider ()
-		{
-
-		}
-		
-		public string ServiceName => "SampleProvider";
-
-		public bool SupportsTarget (IIdentity target)
-		{
-			// Implement	
-		}
-
-		public PermissionResult CheckPermission (IIdentity target, string permission)
-		{
-			// Implement	
-		}
-
-		public PermissionResult CheckHasAllPermissions (IIdentity target, params string [] permissions)
-		{
-			// Implement	
-		}
-
-		public PermissionResult CheckHasAnyPermission (IIdentity target, params string [] permissions)
-		{
-			// Implement	
-		}
-
-		public bool AddDeniedPermission (IIdentity target, string permission)
-		{
-			// Implement	
-		}
-
-		public bool AddGroup (IIdentity target, IPermissionGroup group)
-		{
-			// Implement	
-		}
-
-		public bool AddPermission (IIdentity target, string permission)
-		{
-			// Implement	
-		}
-
-		public bool CreateGroup (IPermissionGroup group)
-		{
-			// Implement	
-		}
-
-		public bool DeleteGroup (IPermissionGroup group)
-		{
-			// Implement	
-		}
-
-		public IPermissionGroup GetGroup (string id)
-		{
-			// Implement	
-		}
-
-		public IEnumerable<IPermissionGroup> GetGroups (IIdentity target)
-		{
-			// Implement	
-		}
-
-		public IEnumerable<IPermissionGroup> GetGroups ()
-		{
-			// Implement	
-		}
-
-		public IPermissionGroup GetPrimaryGroup (IUser user)
-		{
-			// Implement	
-		}
-
-		public void Load (IConfigurationContext context)
-		{
-			// Implement	
-		}
-
-		public void Reload ()
-		{
-			// Implement	
-		}
-
-		public bool RemoveDeniedPermission (IIdentity target, string permission)
-		{
-			// Implement	
-		}
-
-		public bool RemoveGroup (IIdentity target, IPermissionGroup group)
-		{
-			// Implement	
-		}
-
-		public bool RemovePermission (IIdentity target, string permission)
-		{
-			// Implement	
-		}
-
-		public void Save ()
-		{
-			// Implement	
-		}
-
-		public bool UpdateGroup (IPermissionGroup group)
-		{
-			// Implement	
-		}
-	}
-}
-```
-
-### Register your provider
-
-```csharp
-namespace SamplePlugin
-{
-	public class Main : Plugin
-	{
-		public Main (IDependencyContainer container) : base ("Sample Plugin", container)
-		{
-			container.RegisterSingletonType <IPermissionProvider, MySamplePermissionProvider> ();
-		}
-	}
-}
+await permissionProvider.LoadAsync(context); // load from a config context
+await permissionProvider.SaveAsync(); // save to config
+await permissionProvider.ReloadAsync(); // reload from config
 ```
