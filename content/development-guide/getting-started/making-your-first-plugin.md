@@ -2,24 +2,24 @@
 
 In this guide we will cover:
 
-1. Setting up Visual Studio
-2. Creating a basic plugin
+1. Setting up Visual Studio.
+2. Creating a basic plugin.
 
 ## Setting up Visual Studio
+Firstly download and install Visual Studio Community Edition. On the installer, you should select all .NET Core packages.
+
 ### Creating the Project
-To get started with our plugin first create a new project in Visual Studio you will be greeted with a window which should look like the one below.
+After installing and starting Visual Studio, create a new project. You will be greeted with a window which should look like the one below.
 
 ![alt-text](https://i.imgur.com/QyYj0Ny.png)
 
-Make sure that the .NET framework 3.5 is selected (This could change in the future). Give your plugin a name, in this case we'll be making a Welcome Messager. And select a save location for it.
+Make sure that **Class Library (.NET Standard)** is selected. Give your plugin a name, in this case we'll be making a Welcome Messager. Finally select a save location for it and click "OK".
 
-### Selecting NuGet Packages
-Once your have your project creating go to 'Tools>NuGet Package Manager>Manage NuGet Packages for Solution' a new window will open, In this window go to the Browse tab and search for 'Rocket.API' and 'Rocket.Core' and install them. Once the packages are installed we can move onto making the plugin.
+### Installing NuGet Packages
+Once you have created project, go to "Tools > NuGet Package Manager > Manage NuGet Packages for Solution". In the NuGet window go to the "Browse" tab and search for "Rocket.Core" and install it. If you are making a plugin for a specific game (e.g. Unturned), install the package for it as well (e.g. Rocket.Unturned). Once the packages are installed we can start making the plugin.
 
-## Making the Plugin
-
-Well start by renaming the pre-existing Class1.cs file to Main.cs from the solution explorer and then opening the file. Add the following to the top of the file
-
+## Getting started with the plugin
+We will start by renaming the pre-existing Class1.cs file to MyPluginMain.cs from the solution explorer. Add the following `using`s the top of the file:
 ```csharp
 using Rocket.API.DependencyInjection;
 using Rocket.API.Eventing;
@@ -29,8 +29,7 @@ using Rocket.Core.Plugins;
 using Rocket.Core.User;
 ```
 
-your file should now look something like this
-
+Your file should now look something like this
 ```csharp
 using Rocket.API.DependencyInjection;
 using Rocket.API.Eventing;
@@ -41,64 +40,62 @@ using Rocket.Core.User;
 
 namespace WelcomeMessager
 {
-	public class Main
-	{
+    public class MyPluginMain
+    {
+
+    }
+}
+```
+
+We'll start by making MyPluginMain inherit from Plugin:
+```csharp
+public class MyPluginMain: Plugin<MyPluginConfig>
+{
+    public MyPluginMain(IDependencyContainer container): base ("Welcome Messager", container)
+    {
 	
-	}
+    }
 }
 ```
 
-We'll start by making Main inherit from Plugin
-
+'MyPluginConfig' will show up as an error so we now create a second class called MyPluginConfig:
 ```csharp
-public class Main : Plugin <Config>
+public class MyPluginConfig
 {
-	public Main (IDependencyContainer container) : base ("Welcome Messager", container)
-	{
-		
-	}
+    public string WelcomeMsg { get; set; } = "Welcome to my Server";
 }
 ```
 
-'Config' will show up as an error for now just ignore this. We now create a second class called Config
+This should remove the previous error warning. Any variables added to this class will be configurable by the plugin user.
 
-```csharp
-public class Config
-{
-	public string WelcomeMsg { get; set; } = "Welcome to my Server";
-}
-```
-
-This should remove the previous error warning. Any variables added to this class will act as our configuration.
-
-Now that our configuration is setup we'll move onto making the event listener by creating a new class which will inherit the events we need
+Now that our configuration is setup we'll add an event listener by creating a new class which will inherit the events we need:
 
 ```csharp
 public class EventListener : IEventListener<PlayerConnectedEvent>
 {
-	private Config config;
+    private MyPluginConfig config;
 
-		public EventListener (Config config)
-		{
-			this.config = config;
-		}
+    public EventListener (MyPluginConfig config)
+    {
+        this.config = config;
+    }
 
-		[EventHandler]
-		public void HandleEvent (IEventEmitter emitter, PlayerConnectedEvent @event)
-		{
-			@event.User.SendMessage (config.WelcomeMsg);
-		}
+    [EventHandler]
+    public async Task HandleEvent (IEventEmitter emitter, PlayerConnectedEvent @event)
+    {
+        await @event.Player.User.SendMessageAsync(config.WelcomeMsg);
+    }
 }
 ```
 
 We pass our config through the constructor so it can later be used when we handle the event, in this case our event is simply sending a welcome message to the connected user.
 
-To finish the plugin we need to register our event to do this we go back to our Main class and add an OnLoad
+To finish the plugin we need to register our event listener. To do this we go back to our MyPluginMain class and add an OnActivate like this:
 
 ```csharp
-protected override void OnLoad (bool isFromReload)
+protected override async Task OnActivate(bool isFromReload)
 {
-	EventManager.AddEventListener (this, new EventListener (ConfigurationInstance));
+    EventBus.AddEventListener(this, new EventListener(ConfigurationInstance));
 }
 ```
 
@@ -114,39 +111,39 @@ using Rocket.Core.User;
 
 namespace WelcomeMessager
 {
-	public class Main : Plugin<Config>
-	{
-		public Main (IDependencyContainer container) : base ("Welcome Messager", container)
-		{
+    public class MyPluginMain : Plugin<MyPluginConfig>
+    {
+        public MyPluginMain(IDependencyContainer container) : base ("Welcome Messager", container)
+        {
 
-		}
+        }
 
-		protected override void OnLoad (bool isFromReload)
-		{
-			EventManager.AddEventListener (this, new EventListener (ConfigurationInstance));
-		}
-	}
+        protected override async Task OnActivate (bool isFromReload)
+        {
+            EventBus.AddEventListener (this, new EventListener (ConfigurationInstance));
+        }        
+    }
 
-	public class Config
-	{
-		public string WelcomeMsg { get; set; } = "Welcome to my Server";
-	}
+    public class MyPluginConfig
+    {
+        public string WelcomeMsg { get; set; } = "Welcome to my Server";
+    }
 
-	public class EventListener : IEventListener<PlayerConnectedEvent>
-	{
-		private Config config;
+    public class EventListener : IEventListener<PlayerConnectedEvent>
+    {
+        private MyPluginConfig config;
 
-		public EventListener (Config config)
-		{
-			this.config = config;
-		}
+        public EventListener (MyPluginConfig config)
+        {
+            this.config = config;
+        }
 
-		[EventHandler]
-		public void HandleEvent (IEventEmitter emitter, PlayerConnectedEvent @event)
-		{
-			@event.User.SendMessage (config.WelcomeMsg);
-		}
-	}
+        [EventHandler]
+        public async Task HandleEvent (IEventEmitter emitter, PlayerConnectedEvent @event)
+        {
+            await @event.Player.User.SendMessageAsync(config.WelcomeMsg);
+        }
+    }
 }
 ```
 
