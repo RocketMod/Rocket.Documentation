@@ -187,7 +187,8 @@ Always use the TaskScheduler if you need to run tasks in a separate thread. The 
  
 In order to achieve this,
 * **Don't create your own threads.**
-* **Don't use Timers.**
+* **Don't use the Timer class for running tasks periodically.**
+* **Do not use engine specific components like MonoBehaviour's for functions like Update(), FixedUpdate(), etc.**
 
 Use the TaskScheduler instead.
 
