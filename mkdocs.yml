@@ -31,7 +31,7 @@ pages:
         - Getting Started:
             - Making your first plugin: development-guide/getting-started/making-your-first-plugin.md
             - Commands: development-guide/getting-started/commands.md
-            - Scheduling Tasks: development-guide/getting-started/task-scheduler.md
+            - Scheduling: development-guide/getting-started/scheduling.md
             - Eventing: development-guide/getting-started/eventing.md
             - Logging: development-guide/getting-started/logging.md
             - Configurations: development-guide/getting-started/configuration.md
