@@ -23,26 +23,24 @@ pages:
             - Eco: user-guide/commands/eco.md
         - Support: user-guide/support.md
     - Development Guide:
-        - Concept:
-            - Coding Style: development-guide/concept/coding-style.md
-            - Code Documentation: development-guide/concept/code-documentation.md
-            - Patterns:
-                - Inversion Of Control: development-guide/concept/ioc.md
-            - Compatibility: development-guide/concept/compatibility.md
-        - API:
-            - Database: development-guide/api/database.md
-            - Command: development-guide/api/command.md
-            - Task Scheduler: development-guide/api/task-scheduler.md
-        - Core Implementation:
-            - List of all Services: development-guide/core-implementation/services.md
-            - Eventing: development-guide/core-implementation/eventing.md
-            - Permissions: development-guide/core-implementation/permissions.md
-            - Configuration: development-guide/core-implementation/configuration.md
-            - Logging: development-guide/core-implementation/logging.md
-        - Plugins:
-            - Migration Guide: development-guide/plugins/migration-guide.md
+#        - Concept:
+#            - Code Documentation: development-guide/concept/code-documentation.md
+#            - Patterns:
+#                - Inversion Of Control: development-guide/concept/ioc.md
+#            - Compatibility: development-guide/concept/compatibility.md
+        - Getting Started:
             - Making your first plugin: development-guide/plugins/making-your-first-plugin.md
-            - List of Events: development-guide/plugins/events.md
+            - Commands: development-guide/getting-started/commands.md
+            - Scheduling Tasks: development-guide/getting-started/task-scheduler.md
+            - Eventing: development-guide/getting-started/eventing.md
+            - Logging: development-guide/getting-started/logging.md
+            - Configurations: development-guide/getting-started/configuration.md
+            - Permissions: development-guide/getting-started/permissions.md
+#            - Database: development-guide/getting-started/database.md
+        - Misc:
+            - Migration Guide: development-guide/misc/migration-guide.md
+            - List of all services: development-guide/misc/services.md
+            - List of Events: development-guide/misc/events.md
         - Game Implementations:
             - Creating a new implementation: development-guide/game-implementations/creating-a-new-implementation.md
             - Unturned 3:

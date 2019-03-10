@@ -1,7 +1,13 @@
-# Implementing Commands
+# Commands
+Commands are an interface for users and other plugins to trigger specific actions of your plugins. They are usually executed via chat, console, web interface or rcon.
+
+Example command: `/kick PlayerA "Some kick Reason"`.
+
+## Implementing Commands
 There are two ways to implement commands in RocketMod 5. The first one is by implementing the ICommand interface, the second one is by using the `[Command]` attribute.
 
-## 1. Registering Commands with ICommand
+### 1. Registering Commands with ICommand
+Implement the `ICommand` interface like this:
 ```csharp
 using Rocket.API.Commands;
 using Rocket.API.User;
@@ -28,7 +34,6 @@ namespace SamplePlugin
     }
 }
 ```
-
 * **Name:**		The commands name (e.g. `rocket`, `buy`, etc).
 * **Aliases:**		A list of alternative for the name, not required.
 * **Summary:**		A short summary of the commands function.
@@ -38,7 +43,9 @@ namespace SamplePlugin
 * **SupportsUser:**	A bool to check if a user passed through is supported for this command. For example, if you only want Console to be able to run your command, you can use `SupportsUser(IUser user) => user is IConsole`
 * **ExecuteAsync:**   The method that gets invoked when someone executes your command.
 
-### Getting UnturnedPlayer from User
+`ICommand`s are automatically registered when your plugin loads. If you want to disable automatic registration, use `[DontAutoRegister]` on top of your command class.
+
+#### Getting UnturnedPlayer from User
 ```csharp
 public async Task ExecuteAsync (ICommandContext context)
 {
@@ -48,7 +55,7 @@ public async Task ExecuteAsync (ICommandContext context)
 ```
 > **Note:** Ensure that `SupportsUser` is set to `user is UnturnedUser` or add manual checks like `if(context.User is UnturnedUser)`, otherwise you might get `InvalidCastException` when a different user type (e.g. the console) calls the command.
 
-### Registering Child Commands
+#### Registering Child Commands
 Child commands have their own relative contexts, aliases, summaries, syntaxes and permissions. For example, on `/sample joke 1`, `context.Parameters[0]` will be equals to `1`.
 
 Child Commands can only be used for `ICommand`s or other `IChildCommand`s. Support for `[Command]` does not exist at the moment.
@@ -83,7 +90,7 @@ public IChildCommand [] ChildCommands { get; } = new IChildCommand []
 
 Now `/sample joke` should work. You can also use `/help sample joke` to get help about this child command.
 
-### Accessing Plugin Instances
+#### Accessing Plugin Instances
 Just add the following to your `SampleCommand` class.
 
 ```csharp
@@ -98,9 +105,9 @@ The IPlugin supplied here is automatically sdt to the plugin which registers the
 
 Now you can use `myPlugin` anywhere to access your plugin.
 
-## 2. Registering Commands with `[Command]` Attribute
+### 2. Registering Commands with `[Command]` Attribute
 First create a new class:
-```cs
+```csharp
 public class MyPluginCommands
 {
 
@@ -108,7 +115,7 @@ public class MyPluginCommands
 ```
 
 After that, add methods with the `[ICommand]` attribute:
-```cs
+```csharp
 public class MyPluginCommands
 {
     [Command(Summary = "Kills a player.")] //By default, name is the same as the method name and it will support all users
@@ -161,13 +168,13 @@ public async Task SendMessage(IUser sender, IUser target, string[] message, ICom
 ```
 In this example, the command syntax would be `/sendmessage <target> <message>`.
 
-# Command Permissions
+## Command Permissions
 Command permissions are determined by the active `CommandHandler` at runtime based on the `CommandContext`, so there is no way of predicting the permission that is going to be checked. Your users should use `/help <command> [subcommand] [sub-subcommand] [...]` to find out what the permission for your command is. The default `CommandHandler` provided by RocketMod uses the scheme `<pluginname>.<command>.<subcommand>...`, however any plugin can change this behaviour.
 
-# Command Contexts
+## Command Contexts
 Command contexts representate the current command with its parameters, the executing user and the dependency container associated with it. 
 
-## Getting Parameters
+### Getting Parameters
 ```csharp
 public async Task ExecuteAsync(ICommandContext context)
 {
