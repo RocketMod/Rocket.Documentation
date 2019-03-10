@@ -1,101 +1,184 @@
-Commands in RocketMod 5 are very similar to RocketMod 4. However the Execute method has been changed.
+# Implementing Commands
+There are two ways to implement commands in RocketMod 5. The first one is by implementing the ICommand interface, the second one is by using the `[Command]` attribute.
 
-## Base Command
+## 1. Registering Commands with ICommand
 ```csharp
 using Rocket.API.Commands;
+using Rocket.API.User;
+using System.Drawing;
 
 namespace SamplePlugin
 {
-	public static SampleCommand : ICommand
-	{
-		public string Name => "Sample";
-		public string [] Aliases => null;
-		public string Summary => "My sample plugins sample command.";
-		public string Description => null;
-		public string Permission => null;
-		public string Syntax => "";
-		public IChildCommand [] ChildCommands { get; } = null;
+    public static SampleCommand : ICommand
+    {
+        public string Name { get; } = "Sample";
+        public string [] Aliases { get; } = null;
+        public string Summary { get; } = "My sample plugins sample command.";
+        public string Description { get; } = null;
+        public string Syntax { get; } = "";
+        public IChildCommand [] ChildCommands { get; } = null;
+        
+        // Allow any user type to execute this command
+        public bool SupportsUser (IUser user) => true; 
 
-		public bool SupportsUser (Type user) => true;
-
-		public void Execute (ICommandContext context)
-		{
-			context.User.SendMessage ("The sample command says hi!", Rocket.API.Drawing.Color.Yellow);
-		}
-	}
+        public async Task ExecuteAsync(ICommandContext context)
+        {
+             await context.User.SendMessageAsync("The sample command says hi!", Color.Yellow);
+        }
+    }
 }
 ```
 
-**Name:**		The commands name (e.g. `rocket`, `buy`, etc).
-**Aliases:**		A list of alternative for the name, not required.
-**Summary:**		A short summary of the commands function.
-**Description:**	A long description entailing the commands functionality, not required.
-**Permission:**		The permission the player needs to use the command. Recommended to keep null as it defaults to `PluginName.CommandName`.
-**Syntax:**	        A syntax string for the command `[]` = *optional* and `<>` = *required* (e.g. [steamId] <itemId>).
-**ChildCommands:**	A list of child commands (e.g. `shop sell`, `shop buy` : `buy` and `sell` are child commands of `shop`), not required.
-**SupportsUser:**	A bool to check if a user passed through is supported for this command.
-**Execute:**		Where your code gets executed.
+* **Name:**		The commands name (e.g. `rocket`, `buy`, etc).
+* **Aliases:**		A list of alternative for the name, not required.
+* **Summary:**		A short summary of the commands function.
+* **Description:**	A long description entailing the commands functionality, not required.
+* **Syntax:**	        A syntax string for the command `[]` = *optional* and `<>` = *required* (e.g. [steamId] <itemId>).
+* **ChildCommands:**	A list of child commands (e.g. `shop sell`, `shop buy` : `buy` and `sell` are child commands of `shop`). Optional.
+* **SupportsUser:**	A bool to check if a user passed through is supported for this command. For example, if you only want Console to be able to run your command, you can use `SupportsUser(IUser user) => user is IConsole`
+* **ExecuteAsync:**   The method that gets invoked when someone executes your command.
 
-## Examples
-### Get Parameters
+### Getting UnturnedPlayer from User
 ```csharp
-public void Execute (ICommandContext context)
+public async Task ExecuteAsync (ICommandContext context)
 {
-	// Get ulong at index 0.
-	if (context.Parameters.TryGet<ulong> (0, out ulong steamId))
-	    throw new CommandWrongUsageException ("Missing SteamID parameter.");
+    UnturnedPlayer player = ((UnturnedUser) context.User).Player;
+    player.Kill();
 }
 ```
+> **Note:** Ensure that `SupportsUser` is set to `user is UnturnedUser` or add manual checks like `if(context.User is UnturnedUser)`, otherwise you might get `InvalidCastException` when a different user type (e.g. the console) calls the command.
 
-### Get UnturnedPlayer from User
-> **WARNING:** Only using this if `SupportsUser` is set to `typeof (UnturnedUser).IsAssignableFrom (user)` or add checks to see if `context.User is UnturnedUser`.
-```csharp
-public void Execute (ICommandContext context)
-{
-	UnturnedPlayer player = ((UnturnedUser) context.User).Player;
-}
-```
+### Registering Child Commands
+Child commands have their own relative contexts, aliases, summaries, syntaxes and permissions. For example, on `/sample joke 1`, `context.Parameters[0]` will be equals to `1`.
 
-### Add Child Command
-First create a command that inherits from IChildCommand *(it has same structure as ICommand)*.
+Child Commands can only be used for `ICommand`s or other `IChildCommand`s. Support for `[Command]` does not exist at the moment.
+
+First create a command that inherits from IChildCommand *(it has the same structure as ICommand)*.
 ```csharp
 public static SampleJokeCommand : IChildCommand
 {
-	public string Name => "Joke";
-	public string [] Aliases => null;
-	public string Summary => "Tells a joke.";
-	public string Description => null;
-	public string Permission => null;
-	public string Syntax => "";
-	public IChildCommand [] ChildCommands { get; } = null;
+    public string Name { get; } = "Joke";
+    public string[] Aliases { get; } = null;
+    public string Summary { get; } = "Tells a joke.";
+    public string Description { get; } = null;
+    public string Syntax { get; } = "";
+    public IChildCommand [] ChildCommands { get; } = null;
 	
-	public bool SupportsUser (Type user) => true;
+    public bool SupportsUser (IUser user) => true;
 	
-	public void Execute (ICommandContext context)
-	{
-		context.User.SendMessage ("<insert generic joke here>", Rocket.API.Drawing.Color.Yellow);
-	}
+    public async Task ExecuteAsync(ICommandContext context)
+    {
+        await context.User.SendMessageAsync("<insert generic joke here>", Color.Yellow);
+    }
 }
 ```
 
-Then set `ChildCommands` to this in your base command.
+After that, set `ChildCommands` to the freshly created class in your base command.
 ```csharp
 public IChildCommand [] ChildCommands { get; } = new IChildCommand []
 {
-	new SampleJokeCommand ()
+    new SampleJokeCommand ()
 };
 ```
 
-Now `/sample joke` should work.
+Now `/sample joke` should work. You can also use `/help sample joke` to get help about this child command.
 
-### Run method in Plugin
-Just add the following to your `SampleCommand`.
+### Accessing Plugin Instances
+Just add the following to your `SampleCommand` class.
 
 ```csharp
-private MyPlugin plugin;
+private MyPlugin myPlugin;
 
 public SampleCommand (IPlugin plugin)
 {
-	this.plugin = (MyPlugin)plugin;
+    this.myPlugin = (MyPlugin)plugin;
+}
+```
+The IPlugin supplied here is automatically sdt to the plugin which registers the command (which is normally your plugin).
+
+Now you can use `myPlugin` anywhere to access your plugin.
+
+## 2. Registering Commands with `[Command]` Attribute
+First create a new class:
+```cs
+public class MyPluginCommands
+{
+
+}
+```
+
+After that, add methods with the `[ICommand]` attribute:
+```cs
+public class MyPluginCommands
+{
+    [Command(Summary = "Kills a player.")] //By default, name is the same as the method name and it will support all users
+    public async Task KillPlayer(IUser sender, IPlayer target)
+    {
+        if (target.IsOnline && target.Entity is ILivingEntity entity)
+            await entity.KillAsync(sender);
+        else // the game likely does not support killing players (e.g. Eco)
+            await sender.SendMessageAsync("Target could not be killed :(");
+    }
+
+    [Command(Name = "Broadcast", Summary = "Broadcasts a message.")]
+    [CommandAlias("bc")]
+    [CommandUser(typeof(IConsole))] // only console can call it
+    public async Task Broadcast(IUser sender, ICommandContext context)
+    {
+        await userManager.BroadcastAsync(sender, translations.GetAsync("broadcast", sender, context.GetArgumentLine(0));
+    }
+}
+```
+
+Unlike `ICommand`s, `[Command]`-based commands are not automatically registed. You can register the class above like this:
+```csharp
+public class MyPlugin : Plugin
+{
+    protected override async Task OnActivate(bool isFromReload)
+    {
+        MyPluginCommands myCommands = new MyPluginCommands();
+        RegisterCommandsFromObject(myCommands);
+    }
+}
+```
+
+Command parameters are automatically set according to the order they were added. There are some special parameters which are not supplied by the user and which are not part of the syntax:
+
+* **IUser**: The user calling the command.
+* **ICommandContext**: The command context.
+* **ICommandParameters**: The parameters of the command.
+* **IDependencyContainer**: The dependency container.
+
+Anything else is automatically converted from what the user inputs.
+
+For example:
+```cs
+[Command(Summary = "Sends a private message to a user.")]
+public async Task SendMessage(IUser sender, IUser target, string[] message, ICommandContext commandContext)
+{
+    await target.User.SendMessageAsync($"[DM] {sender.UserName}: {string.Join(message, " ")}", Color.Green);
+}
+```
+In this example, the command syntax would be `/sendmessage <target> <message>`.
+
+# Command Permissions
+Command permissions are determined by the active `CommandHandler` at runtime based on the `CommandContext`, so there is no way of predicting the permission that is going to be checked. Your users should use `/help <command> [subcommand] [sub-subcommand] [...]` to find out what the permission for your command is. The default `CommandHandler` provided by RocketMod uses the scheme `<pluginname>.<command>.<subcommand>...`, however any plugin can change this behaviour.
+
+# Command Contexts
+Command contexts representate the current command with its parameters, the executing user and the dependency container associated with it. 
+
+## Getting Parameters
+```csharp
+public async Task ExecuteAsync(ICommandContext context)
+{
+    // Get ulong at index 0 (first parameter).
+    // For example, if the command is /sample 4345534 asdasd, we expect "steamId" to be equal to 4345534u.
+
+    // Method 1: this will manually throw exceptions / show error messages
+    if (context.Parameters.TryGet<ulong> (0, out ulong steamId))
+        throw new CommandWrongUsageException("Missing or invalid SteamID parameter.");
+
+    // Method 2: this will automatically throw CommandWrongUsageException
+    ulong steamId = context.Parameters.Get<ulong>(0);
 }
 ```
