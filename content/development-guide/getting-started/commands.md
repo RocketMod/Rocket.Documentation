@@ -197,7 +197,7 @@ public async Task ExecuteAsync(ICommandContext context)
 }
 ```
 
-# Best Practices
+## Best Practices
 
 * Do not handle sub commands manually, e.g. like this:
 ```csharp

@@ -1,3 +1,5 @@
+# Scheduling
+
 RocketMod 5 includes a `ITaskScheduler` interface which allows to control tasks in a consistent way.
 
 ## Overview
@@ -182,7 +184,7 @@ public void SampleTaskCallback (MyObject sampleReturn)
 }
 ```
 
-# Best Practices
+## Best Practices
 Always use the TaskScheduler if you need to run tasks in a separate thread. The TaskScheduler provides RocketMod a uniform way to handle tasks in a consistent way. For example, this way RocketMod can dynamically schedule and run tasks based on current server load.
  
 In order to achieve this,
