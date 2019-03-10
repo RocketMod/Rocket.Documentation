@@ -194,3 +194,34 @@ public async Task ExecuteAsync(ICommandContext context)
     ulong steamId = context.Parameters.Get<ulong>(0);
 }
 ```
+
+# Best Practices
+
+* Do not handle sub commands manually, e.g. like this:
+```csharp
+public async Task ExecuteAsync(ICommandContext context)
+{
+    string subCommand = context.Parameters.Get<string>(0);
+    
+    switch(subCommand.ToLower())
+    {
+        case "kill":
+            if(await permissionProvider.CheckPermissionAsync(context.User, "kill"))
+            {
+                //Do something
+                ...
+            }
+            break;
+
+        case "something":
+            //Do something
+            ...
+            break;
+    }
+}
+
+``` 
+
+This is an inconsistent way of handling commands and will cause issues like permissions not getting automatically assigned or manually getting assigned in a non-standard way. The `/help` command can also not provide information on any of these sub commands as it can not know these exist. It will also prevent consistent error messages when permissions do not match or the command was not found.
+
+Instead of creating subcommands manually, create a child command as explained above.
