@@ -29,7 +29,7 @@ pages:
 #                - Inversion Of Control: development-guide/concept/ioc.md
 #            - Compatibility: development-guide/concept/compatibility.md
         - Getting Started:
-            - Making your first plugin: development-guide/-started/making-your-first-plugin.md
+            - Making your first plugin: development-guide/getting-started/making-your-first-plugin.md
             - Commands: development-guide/getting-started/commands.md
             - Scheduling Tasks: development-guide/getting-started/task-scheduler.md
             - Eventing: development-guide/getting-started/eventing.md
