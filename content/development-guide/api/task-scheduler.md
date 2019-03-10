@@ -1,16 +1,14 @@
-The TaskScheduler is the replacement for the Update function from RocketMod 4 while also adding improved features.
+RocketMod 5 includes a `ITaskScheduler` interface which allows to control tasks in a consistent way.
 
 ## Overview
-With the TaskScheduler you can:
+With the TaskScheduler you can schedule a task to be run on:
+1. frame updates (same as Update in Unity).
+2. physics updates (same as FixedUpdate in Unity).
+3. seperate thread frame updates.
 
-1. Run a method every frame (Same as Update).
-2. Run a method the next frame.
-3. Run a method every physics update (Same as FixedUpdate).
-4. Run a method next physics update.
-5. Run a method every frame on a seperate thread (Same as Update just on seperate thread).
-6. Run a method the next frame on a seperate thread.
+Tasks are automatically destroyed on reloads and must be registered again in your plugins `OnActivate()` method.
 
-## Base
+## Getting Started
 To start you first need to pass the ITaskScheduler through the constructor of your plugin.
 ```csharp
 using Rocket.API.DependencyInjection;
@@ -19,11 +17,11 @@ using Rocket.Core.Plugins;
 
 namespace SamplePlugin
 {
-	public class Main : Plugin
+	public class SamplePlugin : Plugin
 	{
 		private ITaskScheduler taskScheduler;
 
-		public Main (IDependencyContainer container, ITaskScheduler taskScheduler) : base ("Sample Plugin", container)
+		public SamplePlugin(IDependencyContainer container, ITaskScheduler taskScheduler): base("Sample Plugin", container)
 		{
 			this.taskScheduler = taskScheduler;
 		}
@@ -31,149 +29,168 @@ namespace SamplePlugin
 }
 ```
 
-Once you have the task scheduler you can begin to use it. In each case you will need to pass in the plugin, if you are scheduling a task from within the class that inherits from Plugin then you can just pass `this`, otherwise you will need to pass `this` through to those other classes;
+Once you have done that, you can begin to schedule your tasks.
 
-## ScheduleEveryFrame
-This will schedule a method to run every [Update](https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html) frame.
+### ScheduleEveryFrame
+Schedules a task to run on every frame update.
 
-**Please read the ASync version to see if you should be using it instead.**
 ```csharp
-protected override void OnLoad (bool isFromReload)
+protected override async Task OnActivate(bool isFromReload)
 {
-	// The SampleMethod string acts as a user friendly name can be anything you want.
-	taskScheduler.ScheduleEveryFrame (this, SampleMethod, "SampleMethod");
+	// The "My custom Task" parameter is the description for your task. It
+	// should be something that can identify your plugin and the exact task. 
+	// It will be shown to the user if an error occurs or when the user manages
+	// tasks manually.
+	taskScheduler.ScheduleEveryFrame(this, SampleTask, "My custom Task");
 }
 
-private void SampleMethod ()
+private void SampleTask ()
 {
 	// Do something...
 }
 ```
 
-## ScheduleNextFrame
-This will schedule a method to run the next [Update](https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html) frame and **it will run only once**. 
+### ScheduleNextFrame
+Schedules a task to run on the next frame update and will run only once. This is useful if you need to access Game or Engine APIs which are not thread safe.
 
-**Please read the ASync version to see if you should be using it instead.**
-
-I'm going to skip the padding above and just focus on the taskScheduler bit.
 ```csharp
-taskScheduler.ScheduleNextFrame (this, SampleMethod, "SampleMethod");
+taskScheduler.ScheduleNextFrame(this, SampleTask, "My custom Task");
 ```
 
-## ScheduleEveryPhysicUpdate
-This will schedule a method to run every [FixedUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html) frame.
+### ScheduleEveryPhysicUpdate
+Schedules a task to run on every physics update frame. 
 ```csharp
-taskScheduler.ScheduleEveryPhysicUpdate (this, SampleMethod, "SampleMethod");
+taskScheduler.ScheduleEveryPhysicUpdate(this, SampleTask, "My custom Task");
 ```
 
-## ScheduleNextPhysicsUpdate
-This will schedule a method to the next [FixedUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html) frame and **it will run only once**.
+> **Note**: Physics update frame definition depends on the engine and game used. For Unity, it is the equivalent of "FixedUpdate". You should use Physic Update when you want to apply physics, e.g. when applying force to an object.  
+
+### ScheduleNextPhysicsUpdate
+Schedules a task to run on the next physics update frame and will run only once.
 ```csharp
-taskScheduler.ScheduleNextPhysicUpdate (this, SampleMethod, "SampleMethod");
+taskScheduler.ScheduleNextPhysicUpdate(this, SampleTask, "My custom Task");
+```
+> **Note**: Physics update frame definition depends on the engine and game used. For Unity, it is the equivalent of "FixedUpdate". You should use Physic Update when you want to apply physics, e.g. when applying force to an object.
+
+### ScheduleEveryAsyncFrame
+ Schedules a task to run on every frame on a **seperate** thread. Running on async frames is vital for performance if your task is doing heavy calculations and causing delays. This will prevent the server from freezing in such cases.
+```csharp
+taskScheduler.ScheduleEveryAsyncFrame(this, SampleTask, "My custom Task");
 ```
 
-## ScheduleEveryAsyncFrame
-This and the next functions are probably the most imporant. This will run your method every frame on a **seperate** thread, this is vital for performance, if your method is doing some calculation and will have a delay it should be run on a seperate thread to avoid lagging the server, the next one is probably more useful then the this since its only run once but still.
+> **Note**: Keep in mind that in most cases you can not access Game or Engine APIs from separate threads.
+
+### ScheduleNextAsyncFrame
+Schedules a task to be run on the next frame in a **seperate** thread once. Running on async frames is vital for performance if your task is doing heavy calculations and causing delays. This will prevent the server from freezing in such cases.
+
 ```csharp
-taskScheduler.ScheduleEveryAsyncFrame (this, SampleMethod, "SampleMethod");
+taskScheduler.ScheduleNextAsyncFrame(this, SampleTask, "My custom Task");
+```
+> **Note**: Keep in mind that in most cases you can not access Game or Engine APIs from separate threads.
+
+### ScheduleDelayed
+Schedules a task to be run once after a set delay time. Can be configured to run the main thread or on a seperate thread.
+```csharp
+TimeSpan runAfter = TimeSpan.FromSeconds (15); // Run after 15 seconds
+taskScheduler.ScheduleDelayed(this, SampleTask, "My custom Task", runAfter, true); // Async, runs on separate thread
+taskScheduler.ScheduleDelayed(this, SampleTask, "My custom Task", runAfter); // Sync, runs on main thread
 ```
 
-## ScheduleNextAsyncFrame
-This will run your method once on the next frame in a **seperate** thread.
-
-> **Please use this for anything SQL or database related. Don't be that plugin that lags the server.**
+### ScheduleAt
+Schedules a task to be run at the given time. The time is based on Utc timezone. Keep in mind that the execution time is not exact, but within a few milliseconds depending on the server load. 
 ```csharp
-taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod, "SampleMethod");
+// Run after 15 seconds
+DateTime runTime = DateTime.UtcNow + TimeSpan.FromSeconds (15);
+
+taskScheduler.ScheduleAt(this, SampleTask, "My custom Task", runTime, true); // Async, runs on separate thread
+taskScheduler.ScheduleAt(this, SampleTask, "My custom Task", runTime); // Sync, runs on main thread
 ```
 
-## ScheduleDelayed
-This will run your method once after the set delay time and can be both on **main** thread and **seperate** thread.
-It is also destroyed after reload.
+### SchedulePeriodically
+Schedules a task to be run every set amount of time and with an optional first delay. Can be configured to run on **main** thread or a **seperate** thread.
 ```csharp
-TimeSpan runAfter = TimeSpan.FromSeconds (15); // Runs after 15 seconds
-taskScheduler.ScheduleDelayed (this, SampleMethod, "SampleMethod", runAfter, true); // Async
-taskScheduler.ScheduleDelayed (this, SampleMethod, "SampleMethod", runAfter); // No Async
+TimeSpan runEvery = TimeSpan.FromSeconds(30); // Run every 30 seconds
+TimeSpan runAfter = TuneSpan.FromSecond (5);  // After a first 5 seconds delay
+
+taskScheduler.SchedulePeriodically(this, SampleTask, "My custom Task", runEvery, null, true); // Async, runs on a separate thread
+taskScheduler.SchedulePeriodically(this, SampleTask, "My custom Task", runEvery, runAfter, true); // Delayed async
+taskScheduler.SchedulePeriodically(this, SampleTask, "My custom Task", runEvery); // Sync, runs on main threasd
+taskScheduler.SchedulePeriodically(this, SampleTask, "My custom Task", runEvery, runAfter); // Delayed sync
 ```
 
-## ScheduleAt
-This will run your method once after the set delay time and can be both on **main** thread and **seperate** thread.
-It is also destroyed after reload.
-```csharp
-TimeSpan runAfter = TimeSpan.FromSeconds (15); // Runs every 15 seconds
-taskScheduler.ScheduleAt (this, SampleMethod, "SampleMethod", runAfter, true); // Async
-taskScheduler.ScheduleAt (this, SampleMethod, "SampleMethod", runAfter); // No Async
-```
+### RunOnMainThread
+Schedules a task via `ScheduleNextFrame` if the current thread is no the main thread. Otherwise, it will run the task directly.
 
-## SchedulePeriodically
-This will run your method every set amount of time and can have a delay also can be both on **main** thread and **seperate** thread.
-It is also destroyed after reload.
 ```csharp
-TimeSpan runEvery = TimeSpan.FromSeconds (30); Run every 30 Seconds
-TimeSpan runAfter = TuneSpan.FromSeconds (5); After 5 Second Delay (were applicable)
-taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, null, true); // Async
-taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, runAfter, true); // Delayed Async
-taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery); // No Async
-taskScheduler.SchedulePeriodically (this, SampleMethod, "SampleMethod", runEvery, runAfter); // Delayed
+taskScheduler.RunOnMainThread(this, SampleTask, "My custom Task");
 ```
 
 ## Extra
 ### Getting a List of Active Tasks
 
-This will also return tasks scheduled by other plugins
+This will return all scheduled tasks.
 ```csharp
 taskScheduler.Tasks
 ```
 
 ### Cancelling a Task
-
-There are two methods of doing this
-
-**1**. Use this method if you arent sure if the task is canceled and wanna know if it was
 ```csharp
-ITask myTask = taskScheduler.ScheduleEveryFrame (this, SampleMethod);
-
-// Returns a boolean.
-// true 	= Canceled.
-// false 	= Was already canceled.
-taskScheduler.CancelTask (myTask);
+ITask myTask = taskScheduler.ScheduleEveryFrame(this, SampleTask, "");
+myTask.Cancel();
 ```
 
-**2**. Use this method if you just want to cancel and dont care if it was previously canceled
-
-**Note:** This still just calls `taskScheduler.CancelTask (...);` however it might be more convenient for you to use. `myTask.Cancel ();` in some cases.
+### Passing Arguments to Tasks when Scheduling
 ```csharp
-myTask.Cancel ();
-```
-
-### Passing Arguments Through
-```csharp
-protected override void OnLoad (bool isFromReload)
+protected override async Task OnActivate(bool isFromReload)
 {
-	taskScheduler.ScheduleNextFrame (this, () => SampleMethod ("A little touch of wizard"), "Wizard's SampleMethod");
+    string myArgument = "A little touch of wizard";
+
+    taskScheduler.ScheduleNextFrame(this, () => SampleTask(myArgument), "Wizard's Sample Task");
 }
 
-public void SampleMethod (string sampleParameter)
+public void SampleTask (string sampleParameter)
 {
-	// Do Something...
+    Logger.LogInformation(sampleParameter);
 }
 ```
 
-### Returning Data / Callback Function
-You can't use return however you can create a callback function.
+### Returning Data with Callbacks
+You can't not return directly from tasks, however you can create a callback.
 ```csharp
-protected override void OnLoad (bool isFromReload)
+protected override async Task OnActivate(bool isFromReload)
 {
-    taskScheduler.ScheduleNextAsyncFrame (this, SampleMethod, "SampleMethod");
+    taskScheduler.ScheduleNextAsyncFrame (this, () => SampleTask(SampleTaskCallback), "SampleMethod");
 }
 
-public void SampleMethod ()
+public void SampleTask(Action<MyObject> callback)
 {
-	object sampleData = // Do Something...
-	SampleMethodCallback (sampleData);
+    MyObject sampleData = // Do Something...
+
+    // Run callback on same thread:
+	callback?.Invoke(sampleData);
+
+    // Run callback on main thread:
+    if(callback != null)
+    { 
+        taskScheduler.RunOnMainThread(this, () => callback.Invoke(sampleData), "My Callback");
+    }
 }
 
-public void SampleMethodCallback (object sampleReturn)
+public void SampleTaskCallback (MyObject sampleReturn)
 {
-	// Do some more things...
+    // Do some more things...
 }
 ```
+
+# Best Practices
+Always use the TaskScheduler if you need to run tasks in a separate thread. The TaskScheduler provides RocketMod a uniform way to handle tasks in a consistent way. For example, this way RocketMod can dynamically schedule and run tasks based on current server load.
+ 
+In order to achieve this,
+* **Don't create your own threads.**
+* **Don't use Timers.**
+
+Use the TaskScheduler instead.
+
+Because RocketMod can not control custom plugin threads, this would result in lots of threads with no pooling. As a result, a lot of context switches would occur which would drastically slow down performance. Plugins also often do not create and handle threads correctly, resulting in endless loops and poor performance.
+
+RocketMod uses `WaitHandle`s to ensure that threads do not run in empty loops and also dynamically schedules tasks to always ensure best performance.
