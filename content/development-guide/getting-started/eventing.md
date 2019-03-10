@@ -1,8 +1,9 @@
+# Eventing
+Events are used to trigger actions when something happens (e.g. player joined, server is shutting down, etc.) 
+
 The default C# events used with old RocketMod 4 were very limited. It was not possible to have prioritized events. The new API allows controlling lifespan and execution order of events.
 
-# Listening for events
-
-## Listening with IEventListener<>
+## Listening for events
 To listen to events, you will have to create a class which implements `IEventListener<YourTargetEvent>`. 
 Don't forget to add `[EventHandler]` attribute to your method to set various options like priority.
 
@@ -65,15 +66,13 @@ public class MyPluginMain : Plugin
 
     You should only use monitor when it does not impact anything ingame, for example you can use it for logging purposes.
 
-## Listening with Callbacks
-
-## Event priorities and cancellation
+### Event priorities and cancellation
 EventHandlers can have priorities by using `[EventHandler(Priority = EventPriority.X)]`
 The method with `Lowest` will be executed first, and `Monitor` will be executed last. `Monitor` should be only be used by listener which do not do any changes.
 If any event listener decides to cancel the event before your event listener is called, your listener will not be called.
 You can use `[EventHandler(IgnoreCancelled = true)]` to receive cancelled events. This also allows you to un-cancel events by setting `Event.IsCancelled` to false.
 
-# Creating custom events (e.g. for other plugins)
+## Creating custom events (e.g. for other plugins)
 Create a new class which extends `Rocket.API.Eventing.Event`. If you want to have it cancellable, add `ICancellableEvent` to it. 
 
 ```cs

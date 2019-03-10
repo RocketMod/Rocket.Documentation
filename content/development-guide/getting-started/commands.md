@@ -1,4 +1,5 @@
 # Commands
+
 Commands are an interface for users and other plugins to trigger specific actions of your plugins. They are usually executed via chat, console, web interface or rcon.
 
 Example command: `/kick PlayerA "Some kick Reason"`.

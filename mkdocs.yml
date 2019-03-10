@@ -34,19 +34,19 @@ pages:
             - Scheduling: development-guide/getting-started/scheduling.md
             - Eventing: development-guide/getting-started/eventing.md
             - Logging: development-guide/getting-started/logging.md
-            - Configurations: development-guide/getting-started/configuration.md
+            - Configurations: development-guide/getting-started/configurations.md
             - Permissions: development-guide/getting-started/permissions.md
 #            - Database: development-guide/getting-started/database.md
         - Misc:
             - Migration Guide: development-guide/misc/migration-guide.md
-            - List of all services: development-guide/misc/services.md
-            - List of Events: development-guide/misc/events.md
+            - List of all Services: development-guide/misc/services.md
+            - List of all Events: development-guide/misc/events.md
         - Game Implementations:
             - Creating a new implementation: development-guide/game-implementations/creating-a-new-implementation.md
-            - Unturned 3:
-                - Home : development-guide/game-implementations/unturned3/index.md
-            - Eco:
-                - Home : development-guide/game-implementations/eco/index.md
+#            - Unturned 3:
+#                - Home : development-guide/game-implementations/unturned3/index.md
+#            - Eco:
+#                - Home : development-guide/game-implementations/eco/index.md
     - About:
         - Documentation: about/documentation.md
 

@@ -1,4 +1,5 @@
 # Configurations
+
 Configurations are used to read, write and store variables. This allows an user to configure your plugin.
 
 ```csharp

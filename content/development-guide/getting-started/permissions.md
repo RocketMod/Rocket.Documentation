@@ -1,3 +1,5 @@
+# Permissions
+
 Permissions are used to determine which users can execute an action and which can not.
 
 To access the permissions service, add the IPermissionProvider service to your plugin like this:

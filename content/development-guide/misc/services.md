@@ -1,19 +1,20 @@
-| **Rocket.API**                                  |
-|-------------------------------------------------|
-| ICommand                                        |
-| ICommandHandler                                 |
-| ICommandProvider                                |
-| IConfiguration                                  |
-| IConfigurationContext                           |
-| IDependencyContainer                            |
-| IEconomyProvider                                |
-| ILogger                                         |
-| IPermissionProvider                             |
-| IPlayerManager                                  |
-| IPlayer                                         |
-| IPluginManager                                  |
-| IPlugin                                         |
-| ITaskScheduler                                  |
-| IUserManager                                    |
-| IUser                                           |
-| ILifecycleObject                                |
+# List of all RocketMod Services
+
+| **Service**                                     |  **Job**                                             |
+|-------------------------------------------------|------------------------------------------------------|
+| ICommandHandler                                 | Executing commands                                   |
+| ICommandProvider                                | Providing commands                                   |
+| IConfiguration                                  | Reading/Saving Configrations                         |
+| IDependencyContainer                            | Inversion of Control                                 |
+| IDependencyResolver                             | Resolving Services                                   |
+| IEconomyProvider                                | Managing and providing economy                       |
+| IEventBus                                       | Eventing                                             |
+| IHost                                           | Service for RocketMod Host                           |
+| ILogger                                         | Logging                                              |
+| IRuntime                                        | Bootstrapping RocketMod                              |
+| IPermissionProvider                             | Permission handling                                  |
+| IPlayerManager                                  | Managing players                                     |
+| IPluginLoader                                   | Loading and managing plugins                         |
+| ITranslationProvider                            | Providing translations and I18N                      |
+| ITaskScheduler                                  | Scheduling                                           |
+| IUserManager                                    | Managing Users                                       |

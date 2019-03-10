@@ -1,7 +1,7 @@
-Here is a list of events available in RocketMod 5.
+# List of all RocketMod Events
 
-## Core
-| Core                                            | Using                                           |
+## Rocket.Core
+| Core                                            | Namespace                                       |
 |-------------------------------------------------|-------------------------------------------------|
 | PreCommandExecutionEvent                        | Rocket.Core.Commands.Events                     |
 | ImplementationReadyEvent                        | Rocket.Core.Implementation.Events               |
@@ -28,8 +28,8 @@ Here is a list of events available in RocketMod 5.
 | UserKickEvent                                   | Rocket.Core.User.Events                         |
 | UserUnbanEvent                                  | Rocket.Core.User.Events                         |
 
-## Unturned
-| Unturned                                        | Using                                           |
+## Rocket.Unturned
+| Unturned                                        | Namespace                                       |
 |-------------------------------------------------|-------------------------------------------------|
 | UnturnedPlayerChatEvent                         | Rocket.Unturned.Player.Events                   |
 | UnturnedPlayerDamagedEvent                      | Rocket.Unturned.Player.Events                   |

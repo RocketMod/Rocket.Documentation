@@ -1,3 +1,5 @@
+# Logging
+
 RocketMod 5 uses ILogger service for logging.
 You can use it in your plugin like this:
 
