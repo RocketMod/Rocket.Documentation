@@ -36,13 +36,21 @@ namespace SamplePlugin
 }
 ```
 * **Name:**		The commands name (e.g. `rocket`, `buy`, etc).
+
 * **Aliases:**		A list of alternative for the name, not required.
+
 * **Summary:**		A short summary of the commands function.
+
 * **Description:**	A long description entailing the commands functionality, not required.
+
 * **Syntax:**	        A syntax string for the command `[]` = *optional* and `<>` = *required* (e.g. [steamId] <itemId>).
+
 * **ChildCommands:**	A list of child commands (e.g. `shop sell`, `shop buy` : `buy` and `sell` are child commands of `shop`). Optional.
+
 * **SupportsUser:**	A bool to check if a user passed through is supported for this command. For example, if you only want Console to be able to run your command, you can use `SupportsUser(IUser user) => user is IConsole`
+
 * **ExecuteAsync:**   The method that gets invoked when someone executes your command.
+
 
 `ICommand`s are automatically registered when your plugin loads. If you want to disable automatic registration, use `[DontAutoRegister]` on top of your command class.
 
@@ -159,9 +167,13 @@ public class MyPluginMain : Plugin
 Command parameters are automatically set according to the order they were added. There are some special parameters which are not supplied by the user and which are not part of the syntax:
 
 * **IUser**: The user calling the command.
+
 * **ICommandContext**: The command context.
+
 * **ICommandParameters**: The parameters of the command.
+
 * **IDependencyContainer**: The dependency container.
+
 
 Anything else is automatically converted from what the user inputs.
 

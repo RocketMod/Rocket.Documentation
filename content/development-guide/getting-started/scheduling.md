@@ -132,12 +132,12 @@ taskScheduler.RunOnMainThread(this, SampleTask, "My custom Task");
 
 This will return all scheduled tasks.
 ```csharp
-taskScheduler.Tasks
+var pendingTasks = taskScheduler.Tasks;
 ```
 
 ### Cancelling a Task
 ```csharp
-ITask myTask = taskScheduler.ScheduleEveryFrame(this, SampleTask, "");
+ITask myTask = taskScheduler.ScheduleEveryFrame(this, SampleTask, "My Task Description");
 myTask.Cancel();
 ```
 
@@ -189,8 +189,11 @@ Always use the TaskScheduler if you need to run tasks in a separate thread. The 
  
 In order to achieve this,
 * **Don't create your own threads.**
+
 * **Don't use the Timer class for running tasks periodically.**
+
 * **Do not use engine specific components like MonoBehaviour's for functions like Update(), FixedUpdate(), etc.**
+
 
 Use the TaskScheduler instead.
 

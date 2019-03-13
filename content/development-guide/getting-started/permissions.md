@@ -200,3 +200,8 @@ await permissionProvider.LoadAsync(context); // load from a config context
 await permissionProvider.SaveAsync(); // save to config
 await permissionProvider.ReloadAsync(); // reload from config
 ```
+
+## Best Practices
+Usually you should deny actions when PermissionResult.Default is returned on requested permissions. Only do not deny if you want an action to be allowed by default, not denied.
+
+Do not use permission checks in commands, use child commands instead, which always have their own permissions defined by RocketMod. 

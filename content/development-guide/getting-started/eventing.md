@@ -11,7 +11,7 @@ You have to register your event listener with `EventBus.AddEventListener(YourPlu
 
 ### Example listener class
 
-```cs
+```csharp
 public class MyEventListener : IEventListener<PlayerConnectedEvent>, IEventListener<PlayerChatEvent>
 {
     private IChatManager chatManager;
@@ -61,13 +61,14 @@ public class MyPluginMain : Plugin
     Execution order of events is like this:   
 
 
-    `Lowest -> Low -> Normal -> High -> Highest -> Monitor`.
+    `Lowest` -> `Low` -> `Normal` -> `High` -> `Highest` -> `Monitor`.
 
 
-    You should only use monitor when it does not impact anything ingame, for example you can use it for logging purposes.
+    You should only use monitor when it does not impact anything, for example when you use it purely for logging purposes.
 
 ### Event priorities and cancellation
-EventHandlers can have priorities by using `[EventHandler(Priority = EventPriority.X)]`
+EventHandlers can have priorities by using `[EventHandler(Priority = EventPriority.X)]`. 
+
 The method with `Lowest` will be executed first, and `Monitor` will be executed last. `Monitor` should be only be used by listener which do not do any changes.
 If any event listener decides to cancel the event before your event listener is called, your listener will not be called.
 You can use `[EventHandler(IgnoreCancelled = true)]` to receive cancelled events. This also allows you to un-cancel events by setting `Event.IsCancelled` to false.
@@ -75,7 +76,7 @@ You can use `[EventHandler(IgnoreCancelled = true)]` to receive cancelled events
 ## Creating custom events (e.g. for other plugins)
 Create a new class which extends `Rocket.API.Eventing.Event`. If you want to have it cancellable, add `ICancellableEvent` to it. 
 
-```cs
+```csharp
 public class MyEvent: Event, ICancellableEvent
 {
         public string SomeData { get; set; }
@@ -103,7 +104,7 @@ public class MyEvent: Event, ICancellableEvent
 
 You can trigger and handle your custom events like this:
 
-```cs
+```csharp
 MyEvent @event = new MyEvent();
 @event.SomeData = data; 
 eventBus.Emit(plugin, @event, callback: (e) => {
