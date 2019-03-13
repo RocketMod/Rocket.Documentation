@@ -2,37 +2,32 @@
 
 ## Manual Install
 
-First start by installing the plugin from your chosen source. Then add the `plugin-name.dll` to the `Rocket/Plugins` folder in your server. If the plugin came with libraries/packages then add all those .dll to the `Rocket/Packages` folder. Once thats done run your server and wait for all the plugins configuration files to generate, after its on you can shutdown and go to `Rocket/Plugins/plugin-name` and edit the `plugin-name.Configuration.xxx`.
+First start by downlading the plugin from your chosen source. After that add the `plugin-name.dll` to the `Rocket/Plugins` folder in your server. If the plugin came with libraries then add all those .dll to the `Rocket/Libraries` folder. Once thats done start your server and wait for all the plugins configuration files to generate, after its on you can shutdown and go to `Rocket/Plugins/plugin-name` and edit the `plugin-name.Configuration.xxx`.
 
 ## From Console
+You can run the following command to install and manage plugins from [RocketMod Harbor](https://harbor.rocketmod.net):
 
 ### Install
-Start by turning on your server. And then running this command
+Downloads and installs a plugin.
 ```
 rocket install <plugin-name>
 ```
 
-**Example**
+**Example:**
 ```
 rocket install uconomy
 ```
 
-### Uninstall
-Works the same as install except this time it will remove the plugin
+### Remove
+Removes a plugin.
 
 ```
-rocket uninstall <plugin-name>
+rocket remove <plugin-name>
 ```
 
 ### Updating
-Updated a selected plugin
+Updates a plugin.
 
 ```
 rocket update <plugin-name>
-```
-
-### Setting up config
-This command will let you fill out certain config fields from console.
-```
-rocket setup <plugin-name>
 ```
