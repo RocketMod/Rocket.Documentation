@@ -27,7 +27,8 @@ public class MyPlugin : Plugin
 !!! note
     Order of log messages level is like this:
 
-    (least messages)                 ->               (most messages)
+    `(least messages)                ->               (most messages)`
+
     `Fatal` > `Error` > `Warning` > `Information` > `Debug` > `Trace`.
 
     This means that, for example, when log level is set to "Warning", only "Warning", "Error" and "Fatal" messages will be shown.

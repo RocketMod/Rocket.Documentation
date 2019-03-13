@@ -7,10 +7,14 @@ If you use UnityEngine or UnrealEngine, make sure that you also import Rocket.Un
 
 The following services are expected to be implemented (see [[Services]] for registering services using IDependencyRegistrator):
 * ITaskScheduler //This is not needed if you use UnityEngine or UnrealEngine packages
+
 * IPlayerManager
+
 * IHost
 
+
 The following events **must** be implemented:
+
 * ImplementationReadyEvent
 
 When your assembly loads, call `Runtime.Bootstrap()`. If everything works, your `IHost.Load()` will be called.
