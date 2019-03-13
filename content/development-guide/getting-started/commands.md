@@ -35,6 +35,7 @@ namespace SamplePlugin
     }
 }
 ```
+
 * **Name:**		The commands name (e.g. `rocket`, `buy`, etc).
 
 * **Aliases:**		A list of alternative for the name, not required.

@@ -8,7 +8,7 @@ In this guide we will cover:
 ## Setting up Visual Studio
 Download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (you can also use newer versions). After that you select the .NET Core cross-platform development and the .NET Desktop Development options.
 
-![Selecting .NET desktop development option](https://i.imgur.com/T7tBHgB.png)
+![Selecting .NET desktop development option](https://docs.microsoft.com/en-us/visualstudio/install/media/vs2017-modify-workloads.png?view=vs-2017g)
 
 ![Selecting .NET Core cross-platform development option](https://static.packt-cdn.com/products/9781787281905/graphics/image_05_002.png)
 
