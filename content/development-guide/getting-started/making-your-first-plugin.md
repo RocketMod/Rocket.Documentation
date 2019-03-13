@@ -2,11 +2,15 @@
 
 In this guide we will cover:
 
-1. Setting up Visual Studio.
-2. Creating a basic plugin.
+1. Setting up development environment.
+2. Creating a plugin project.
+3. Writing a basic plugin.
+
+## Installing .NET Core SDK
+Install the latest .NET Core SDK from [here](https://dotnet.microsoft.com/download/dotnet-core/2.2) (you should get a dotnet-sdk-xxxxx.exe).
 
 ## Setting up Visual Studio
-Download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (you can also use newer versions). After that you select the .NET Core cross-platform development and the .NET Desktop Development options.
+After setting up .NET Core SDK, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (you can also use newer versions). After that select the .NET Core cross-platform development and the .NET Desktop Development options.
 
 ![Selecting .NET desktop development option](https://docs.microsoft.com/en-us/visualstudio/install/media/vs2017-modify-workloads.png?view=vs-2017g)
 
@@ -20,7 +24,7 @@ After installing and starting Visual Studio, create a new project. You will be g
 Make sure that **Class Library (.NET Standard)** is selected. Give your plugin a name, in this case we'll be making a Welcome Messager. Finally select a save location for it and click "OK".
 
 ### Installing NuGet Packages
-Once you have created project, go to "Tools > NuGet Package Manager > Manage NuGet Packages for Solution". In the NuGet window go to the "Browse" tab and search for "Rocket.Core" and install it. If you are making a plugin for a specific game (e.g. Unturned), install the package for it as well (e.g. Rocket.Unturned). Once the packages are installed we can start making the plugin.
+Once you have created the project, go to "Tools > NuGet Package Manager > Manage NuGet Packages for Solution". In the NuGet window go to the "Browse" tab and search for "Rocket.Core" and install it. If you are making a plugin for a specific game (e.g. Unturned), install the package for it as well (e.g. Rocket.Unturned). Once the packages are installed we can start making the plugin.
 
 ## Getting started with the plugin
 We will start by renaming the pre-existing Class1.cs file to MyPluginMain.cs from the solution explorer. Add the following `using`s the top of the file:
