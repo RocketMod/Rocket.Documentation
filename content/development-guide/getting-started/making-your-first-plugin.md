@@ -6,12 +6,16 @@ In this guide we will cover:
 2. Creating a basic plugin.
 
 ## Setting up Visual Studio
-Firstly download and install Visual Studio Community Edition. On the installer, you should select all .NET Core packages.
+Download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (you can also use newer versions). After that you select the .NET Core cross-platform development and the .NET Desktop Development options.
+
+![Selecting .NET desktop development option](https://i.imgur.com/T7tBHgB.png)
+
+![Selecting .NET Core cross-platform development option](https://static.packt-cdn.com/products/9781787281905/graphics/image_05_002.png)
 
 ### Creating the Project
 After installing and starting Visual Studio, create a new project. You will be greeted with a window which should look like the one below.
 
-![alt-text](https://i.imgur.com/QyYj0Ny.png)
+![Creating the projects in Visual Studio](https://i.imgur.com/QyYj0Ny.png)
 
 Make sure that **Class Library (.NET Standard)** is selected. Give your plugin a name, in this case we'll be making a Welcome Messager. Finally select a save location for it and click "OK".
 
