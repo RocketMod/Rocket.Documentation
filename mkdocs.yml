@@ -17,17 +17,8 @@ pages:
             - Plugins: user-guide/configuration/plugins.md
         - Plugins: 
             - Installation: user-guide/plugins/installation.md
-        - Commands:
-            - Rocket: user-guide/commands/rocket.md
-            - Unturned 3: user-guide/commands/unturned3.md
-            - Eco: user-guide/commands/eco.md
         - Support: user-guide/support.md
     - Development Guide:
-#        - Concept:
-#            - Code Documentation: development-guide/concept/code-documentation.md
-#            - Patterns:
-#                - Inversion Of Control: development-guide/concept/ioc.md
-#            - Compatibility: development-guide/concept/compatibility.md
         - Getting Started:
             - Making your first plugin: development-guide/getting-started/making-your-first-plugin.md
             - Commands: development-guide/getting-started/commands.md
@@ -43,10 +34,6 @@ pages:
             - List of all Events: development-guide/misc/events.md
         - Game Implementations:
             - Creating a new implementation: development-guide/game-implementations/creating-a-new-implementation.md
-#            - Unturned 3:
-#                - Home : development-guide/game-implementations/unturned3/index.md
-#            - Eco:
-#                - Home : development-guide/game-implementations/eco/index.md
     - About:
         - Documentation: about/documentation.md
 
