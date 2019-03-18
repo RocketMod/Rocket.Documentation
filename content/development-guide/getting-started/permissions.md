@@ -1,16 +1,24 @@
 # Permissions
-
 Permissions are used to determine which users can execute an action and which can not.
 
-To access the permissions service, add the IPermissionProvider service to your plugin like this:
+RocketMod exposes two permissions related services:
+
+* IPermissionChecker: Used to check if a user has a requested permission
+
+* IPermissionProvider: Provides permissions and manages them (e.g. adding groups, adding or removing permissions, etc...)
+
+You can add these services like this to your plugin:
 ```csharp
 namespace SamplePlugin
 {
     public class MyPluginMain : Plugin
     {
+        private IPermissionChecker permissionChecker;
         private IPermissionProvider permissionProvider;
-        public MyPluginMain(IDependencyContainer container, IPermissionProvider) : base ("MyPlugin", container)
+
+        public MyPluginMain(IDependencyContainer container, IPermissionChecker permissionChecker, IPermissionProvider permissionProvider) : base ("MyPlugin", container)
         {
+            this.permissionChecker = permissionChecker;
             this.permissionProvider = permissionProvider;
         }
     }
@@ -23,7 +31,7 @@ With the permission provider added we can begin going over its features.
 To check if a user has a permission, use `CheckPermissionAsync`.
 
 ```csharp
-PermissionResult checkResult = await permissionProvider.CheckPermissionAsync(user, "rocket");
+PermissionResult checkResult = await permissionChecker.CheckPermissionAsync(user, "rocket");
 
 switch(checkResult)
 {
@@ -45,7 +53,7 @@ switch(checkResult)
 ### Checking against All Permissions
 To check if a user has access to all requested permissions, use `CheckHasAllPermissionsAsync`.
 ```csharp
-if (await permissionProvider.CheckHasAllPermissionsAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
+if (await permissionChecker.CheckHasAllPermissionsAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
 {
     // Do Something
 }	
@@ -54,7 +62,7 @@ if (await permissionProvider.CheckHasAllPermissionsAsync(user, "rocket", "p", "i
 ### Checking against Any Permission
 To check if a user has any permission from the requested permissions, use `CheckHasAnyPermissionAsync`.
 ```csharp
-if (await permissionProvider.CheckHasAnyPermissionAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
+if (await permissionChecker.CheckHasAnyPermissionAsync(user, "rocket", "p", "i") == PermissionResult.Grant)
 {
     // Do Something
 }	

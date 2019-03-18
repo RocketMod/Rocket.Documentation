@@ -12,7 +12,8 @@
 | IHost                                           | Service for RocketMod Host                           |
 | ILogger                                         | Logging                                              |
 | IRuntime                                        | Bootstrapping RocketMod                              |
-| IPermissionProvider                             | Permission handling                                  |
+| IPermissionChecker                              | Permission checks                                    |
+| IPermissionProvider                             | Permission management (e.g adding / removing permissions and groups) |
 | IPlayerManager                                  | Managing players                                     |
 | IPluginLoader                                   | Loading and managing plugins                         |
 | ITranslationProvider                            | Providing translations and I18N                      |
