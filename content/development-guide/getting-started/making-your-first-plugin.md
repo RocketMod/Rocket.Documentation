@@ -9,25 +9,57 @@ In this guide we will cover:
 ## Installing .NET Core SDK
 Install the latest .NET Core SDK from [here](https://dotnet.microsoft.com/download/dotnet-core/2.2) (you should get a dotnet-sdk-xxxxx.exe).
 
-## Setting up Visual Studio
-After setting up .NET Core SDK, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (you can also use newer versions). After that select the .NET Core cross-platform development and the .NET Desktop Development options.
+## Installing the IDE for coding
+After setting up .NET Core SDK, we will need to install an IDE. The IDE provides us an environment where we can code our plugins.
+
+### Visual Studio Code
+You can install [install Visual Studio Code](https://code.visualstudio.com/) with the [Omnisharp extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) for developing plugins. Visual Studio Code is much lightweighter and faster then a full Visual Studio installation. It is optimal for small-mid size projects.
+
+### Visual Studio
+If you want a full IDE experience, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/). When the installer starts, select "Visual Studio 2017 Community Edition" (or newer). After that select the .NET Core cross-platform development and the .NET Desktop Development options like shown below.
 
 ![Selecting .NET desktop development option](https://docs.microsoft.com/en-us/visualstudio/install/media/vs2017-modify-workloads.png?view=vs-2017g)
 
 ![Selecting .NET Core cross-platform development option](https://static.packt-cdn.com/products/9781787281905/graphics/image_05_002.png)
 
-### Creating the Project
-After installing and starting Visual Studio, create a new project. You will be greeted with a window which should look like the one below.
+## Generating the Plugin Project
+Start cmd or Powershell and navigate to the folder where you want to create the plugin project.
 
-![Creating the projects in Visual Studio](https://i.imgur.com/QyYj0Ny.png)
+E.g.
+```
+mkdir C:\Users\<Username>\source\repos\MyPlugin\
+cd C:\Users\<Username>\source\repos\MyPlugin\
+``` 
 
-Make sure that **Class Library (.NET Standard)** is selected. Give your plugin a name, in this case we'll be making a Welcome Messager. Finally select a save location for it and click "OK".
+After that, install the Rocket Plugin Templates for .NET Core SDK:
+```
+dotnet new -i "Rocket.Templates::*"
+```
 
-### Installing NuGet Packages
-Once you have created the project, go to "Tools > NuGet Package Manager > Manage NuGet Packages for Solution". In the NuGet window go to the "Browse" tab and search for "Rocket.Core" and install it. If you are making a plugin for a specific game (e.g. Unturned), install the package for it as well (e.g. Rocket.Unturned). Once the packages are installed we can start making the plugin.
+Finally, you can generate the plugin project with this command:
+```
+dotnet new rocket-plugin [--name <ProjectName>] [--FullPluginName <FullPluginName>] [--GenerateConfiguration <true/false>] [--GenerateCommands <true/false>] [--PluginType <Universal/Unturned/Eco>]
+```
 
-## Getting started with the plugin
-We will start by renaming the pre-existing Class1.cs file to MyPluginMain.cs from the solution explorer. Add the following `using`s the top of the file:
+To get the full help for the command, you can use the --help switch like this:
+```
+dotnet new rocket-plugin --help
+``` 
+
+### Example
+If you want to create an Unturned plugin project, you can use the following command:
+```
+dotnet new rocket-plugin --FullPluginName "My Unturned Plugin" --PluginType Unturned
+```
+
+### See Also
+To get more information about Rocket Plugin Templates, visit [Rocket.Templates on GitHub](https://github.com/RocketMod/Rocket.Templates).
+
+
+## Making a plugin from Scratch
+First create a new ".NET Standard Cross Platform Library" in Visual Studio.
+
+After that rename the pre-existing Class1.cs file to MyPluginMain.cs from the solution explorer. Add the following `using`s the top of the file:
 ```csharp
 using Rocket.API.DependencyInjection;
 using Rocket.API.Eventing;
