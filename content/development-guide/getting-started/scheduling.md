@@ -4,9 +4,13 @@ RocketMod 5 includes a `ITaskScheduler` interface which allows to control tasks 
 
 ## Overview
 With the TaskScheduler you can schedule a task to be run on:
+
 1. frame updates (same as Update in Unity).
+
 2. physics updates (same as FixedUpdate in Unity).
+
 3. seperate thread frame updates.
+
 
 Tasks are automatically destroyed on reloads and must be registered again in your plugins `OnActivate()` method.
 
