@@ -159,3 +159,5 @@ You can now build the plugin and upload it to your testing server.
 
 ## Best Practices
 Only reference game specific packages (e.g. Rocket.Unturned) if you really need to access the game's API. If you only reference Rocket.Core and Rocket.API, your plugin will directly work on any game that supports RocketMod. Such plugins are called `universal` plugins.
+
+Do not use static plugin instances, instead always pass instances by reference. The reason for that is that Rocket can dynamically create and destroy your plugin instances, which could result in wrong instances being used.
