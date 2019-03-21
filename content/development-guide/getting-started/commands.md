@@ -212,16 +212,17 @@ public async Task ExecuteAsync(ICommandContext context)
 
 ## Best Practices
 
-* Do not handle sub commands manually, e.g. like this:
+* Do **NOT** handle sub commands manually, e.g. do not do it like this:
 ```csharp
 public async Task ExecuteAsync(ICommandContext context)
 {
+    // WRONG WAY
     string subCommand = context.Parameters.Get<string>(0);
-    
+     
     switch(subCommand.ToLower())
     {
         case "kill":
-            if(await permissionProvider.CheckPermissionAsync(context.User, "kill"))
+            if(await permissionProvider.CheckPermissionAsync(context.User, "kill") == PermissionResult.Grant)
             {
                 //Do something
                 ...
@@ -233,6 +234,9 @@ public async Task ExecuteAsync(ICommandContext context)
             ...
             break;
     }
+    
+    // ALSO WRONG
+    if(subCommand == "kill" && wait permissionProvider.CheckPermissionAsync(context.User, "kill") == PermissionResult.Grant)
 }
 
 ``` 
