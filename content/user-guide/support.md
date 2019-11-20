@@ -9,11 +9,6 @@ On this Discord server you can ask for help related to topics like hosting serve
 [Join the Discord for Server Owners](https://discord.gg/43jhkhp).
 
 
-### Discord for Developers
-This Discord server is only meant for developers. You can ask about topics like how to learn programming, how to make plugins, help regarding a specific programming topic etc.
-
-[Join the Discord for Developers](https://discord.gg/EfTP3t4).
-
 ## Forums (help and support)
 We also have a forum where you can ask for support or discuss with others.
 
